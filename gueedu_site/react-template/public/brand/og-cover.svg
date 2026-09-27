@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">GUE Engineering Limited</title>
+  <desc id="desc">Software, AI Automation and Cloud Engineering in Nigeria.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2a5c"/>
+      <stop offset="100%" stop-color="#1a2b5e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="56" y="56" width="1088" height="518" rx="20" fill="none" stroke="#00b4d8" stroke-opacity="0.45" stroke-width="2"/>
+  <circle cx="108" cy="116" r="10" fill="#cc2020"/>
+  <text x="130" y="126" fill="#f5f8ff" font-size="22" font-family="Segoe UI, Arial, sans-serif" font-weight="700">GUE Engineering Limited</text>
+  <text x="80" y="285" fill="#f5f8ff" font-size="66" font-family="Segoe UI, Arial, sans-serif" font-weight="800">Software, AI Automation</text>
+  <text x="80" y="362" fill="#00b4d8" font-size="66" font-family="Segoe UI, Arial, sans-serif" font-weight="800">and Cloud Engineering</text>
+  <text x="80" y="430" fill="#c8d8ea" font-size="30" font-family="Segoe UI, Arial, sans-serif">Engineering-led delivery for teams across Nigeria.</text>
+  <text x="80" y="504" fill="#c8d8ea" font-size="24" font-family="Segoe UI, Arial, sans-serif">www.gueengineering.com</text>
+</svg>
