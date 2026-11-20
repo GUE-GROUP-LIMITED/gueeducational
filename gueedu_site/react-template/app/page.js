@@ -1,4 +1,5 @@
 import GueEducationalLanding from "@/components/home/GueEducationalLanding";
+import "./gue-edu.css";
 
 export const metadata = {
   title: "GUE Educational Limited — TVET & ICT Training | Wannune, Benue State",

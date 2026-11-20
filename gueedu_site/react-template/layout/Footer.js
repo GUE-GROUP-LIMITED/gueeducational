@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+import Link from "next/link";
+import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 
 const primaryLinks = [
   { href: "/about", label: "About" },
@@ -21,15 +22,26 @@ const Footer = () => {
       <div className="gue-shell-footer__inner">
         <div>
           <Link href="/" className="gue-shell-footer__brand">
-            <img src="/brand/logo.png" alt="GUE Engineering logo" />
+            <img src="/brand/logo.jpeg" alt="GUE Educational logo" />
             <span>
-              GUE <em>Engineering</em>
+              <em>Edu</em>Learn
             </span>
           </Link>
           <p className="gue-shell-footer__copy">
-            Software, AI automation, SaaS and open-source delivery, DevOps and
-            cloud engineering, and practical IT training for teams in Nigeria.
+            Technical and vocational education, school management, and digital
+            learning platforms across Nigeria.
           </p>
+          <div className="gue-shell-footer__social">
+            <a href="#" aria-label="Instagram">
+              <FaInstagram size={16} />
+            </a>
+            <a href="#" aria-label="Facebook">
+              <FaFacebookF size={16} />
+            </a>
+            <a href="#" aria-label="Twitter">
+              <FaTwitter size={16} />
+            </a>
+          </div>
         </div>
 
         <div>
@@ -57,7 +69,7 @@ const Footer = () => {
         <div>
           <p className="gue-shell-footer__heading">Contact</p>
           <div className="gue-shell-footer__links">
-            <a href="mailto:hello@gueengineering.com">hello@gueengineering.com</a>
+            <a href="mailto:info@guevte.com">info@guevte.com</a>
             <a href="tel:+2349041157068">+234 904 115 7068</a>
             <Link href="/contact">Start a Project</Link>
           </div>
@@ -66,8 +78,8 @@ const Footer = () => {
 
       <div className="gue-shell-footer__bottom">
         <p>
-          © {new Date().getFullYear()} GUE Engineering Limited (RC 8342226) ·
-          Subsidiary of Gue Group Limited (RC 7501599) · Abuja, Nigeria
+          © {new Date().getFullYear()} GUE Educational Limited (RC 9451933) ·
+          Subsidiary of Gue Group Limited (RC 7501599) · Wannune, Benue State, Nigeria
         </p>
       </div>
     </footer>
@@ -75,4 +87,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

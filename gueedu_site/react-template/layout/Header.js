@@ -1,4 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { FiMenu, FiX } from "react-icons/fi";
+
 const navigationItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -9,13 +14,15 @@ const navigationItems = [
 ];
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="gue-shell-header">
       <div className="gue-shell-header__inner">
         <Link href="/" className="gue-shell-header__logo">
-          <img src="/brand/logo.png" alt="GUE Engineering logo" />
+          <img src="/brand/logo.jpeg" alt="GUE Educational logo" />
           <span>
-            GUE <em>Engineering</em>
+            <em>Edu</em>Learn
           </span>
         </Link>
 
@@ -31,35 +38,49 @@ const Header = () => {
         </nav>
 
         <div className="gue-shell-header__actions">
-          <a href="mailto:hello@gueengineering.com" className="gue-shell-header__meta">
-            hello@gueengineering.com
-          </a>
           <Link href="/contact" className="gue-shell-header__cta">
-            Start a Project
+            Make Appointment
           </Link>
+          <button
+            type="button"
+            className="gue-shell-header__burger"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+          </button>
         </div>
+      </div>
 
-        <details className="gue-shell-header__mobile">
-          <summary aria-label="Open navigation menu">
-            <span />
-            <span />
-            <span />
-          </summary>
-          <div className="gue-shell-header__mobile-panel">
-            {navigationItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-            <a href="https://www.guegroup.com" target="_blank" rel="noreferrer">
-              Gue Group
-            </a>
-            <a href="mailto:hello@gueengineering.com">hello@gueengineering.com</a>
-            <Link href="/contact" className="gue-shell-header__mobile-cta">
-              Start a Project
-            </Link>
-          </div>
-        </details>
+      <div
+        className={`gue-shell-header__mobile-panel${
+          menuOpen ? " gue-shell-header__mobile-panel--open" : ""
+        }`}
+      >
+        {navigationItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.label}
+          </Link>
+        ))}
+        <a
+          href="https://www.guegroup.com"
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => setMenuOpen(false)}
+        >
+          Gue Group
+        </a>
+        <Link
+          href="/contact"
+          className="gue-shell-header__mobile-cta"
+          onClick={() => setMenuOpen(false)}
+        >
+          Make Appointment
+        </Link>
       </div>
     </header>
   );

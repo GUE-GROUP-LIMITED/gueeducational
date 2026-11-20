@@ -1,6 +1,211 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import {
+  FiArrowRight,
+  FiMenu,
+  FiX,
+  FiCheck,
+  FiMapPin,
+  FiPhone,
+  FiMail,
+  FiGlobe,
+} from "react-icons/fi";
+import {
+  LuGraduationCap,
+  LuSchool,
+  LuSend,
+  LuMic,
+  LuLaptop,
+  LuAward,
+  LuUsers,
+  LuTrendingUp,
+  LuClipboardCheck,
+  LuSmartphone,
+  LuClock,
+  LuWallet,
+  LuTarget,
+  LuShieldCheck,
+  LuBuilding,
+  LuBookOpen,
+} from "react-icons/lu";
+import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
+
+/* ── Hand-Drawn Doodle SVG Components ────────────────────────── */
+const DoubleUnderline = ({ className = "" }) => (
+  <svg
+    className={`edu-doodle-underline ${className}`}
+    viewBox="0 0 160 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M3 4.5C35 1.5 110 1 157 5"
+      stroke="#FE9900"
+      strokeWidth="3.2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M12 10.5C45 8 115 7.5 148 11"
+      stroke="#FE9900"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const LoopArrow = ({ className = "" }) => (
+  <svg
+    className={`edu-doodle-arrow ${className}`}
+    viewBox="0 0 64 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M58 8C52 2 38 4 35 15C32 26 48 30 45 40C43 45 32 44 24 40C16 36 10 32 6 32"
+      stroke="#2B7A71"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 26L5 32L10 38"
+      stroke="#2B7A71"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const SunburstRays = ({ className = "" }) => (
+  <svg
+    className={`edu-doodle-sunburst ${className}`}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <line x1="8" y1="36" x2="22" y2="28" stroke="#FE9900" strokeWidth="4" strokeLinecap="round" />
+    <line x1="16" y1="18" x2="28" y2="10" stroke="#FE9900" strokeWidth="4" strokeLinecap="round" />
+    <line x1="34" y1="32" x2="44" y2="42" stroke="#FE9900" strokeWidth="4" strokeLinecap="round" />
+  </svg>
+);
+
+const DoodleAsterisk = ({ color = "#FE9900", size = 48, className = "" }) => (
+  <svg
+    className={`edu-doodle-asterisk ${className}`}
+    width={size}
+    height={size}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <line x1="24" y1="6" x2="24" y2="42" stroke={color} strokeWidth="4" strokeLinecap="round" />
+    <line x1="6" y1="24" x2="42" y2="24" stroke={color} strokeWidth="4" strokeLinecap="round" />
+    <line x1="11" y1="11" x2="37" y2="37" stroke={color} strokeWidth="4" strokeLinecap="round" />
+    <line x1="37" y1="11" x2="11" y2="37" stroke={color} strokeWidth="4" strokeLinecap="round" />
+  </svg>
+);
+
+const SparkleStar = ({ color = "#FE9900", size = 26, className = "" }) => (
+  <svg
+    className={`edu-doodle-sparkle ${className}`}
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill={color}
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z" />
+  </svg>
+);
+
+const SpiralDoodle = ({ size = 44, color = "#2B7A71" }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M22 6C13.16 6 6 13.16 6 22C6 30.84 13.16 38 22 38C30.84 38 38 30.84 38 22C38 15.37 32.63 10 26 10C19.37 10 14 15.37 14 22C14 26.42 17.58 30 22 30C26.42 30 30 26.42 30 22C30 18.69 27.31 16 24 16C20.69 16 18 18.69 18 22"
+      stroke={color}
+      strokeWidth="3.2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const GlobeDoodle = ({ size = 44, color = "#2B7A71" }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <circle cx="22" cy="22" r="16" stroke={color} strokeWidth="3" />
+    <ellipse cx="22" cy="22" rx="8" ry="16" stroke={color} strokeWidth="2.5" />
+    <line x1="6" y1="22" x2="38" y2="22" stroke={color} strokeWidth="2.5" />
+    <line x1="9" y1="14" x2="35" y2="14" stroke={color} strokeWidth="2" />
+    <line x1="9" y1="30" x2="35" y2="30" stroke={color} strokeWidth="2" />
+  </svg>
+);
+
+const TargetDoodle = ({ size = 44, color = "#2B7A71" }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 44 44"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <circle cx="20" cy="24" r="14" stroke={color} strokeWidth="3" />
+    <circle cx="20" cy="24" r="8" stroke={color} strokeWidth="2.5" />
+    <circle cx="20" cy="24" r="3" fill={color} />
+    <path
+      d="M26 18L36 8M36 8H29M36 8V15"
+      stroke={color}
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const ArrowBadge = ({ className = "" }) => (
+  <div className={`edu-arrow-badge ${className}`}>
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#FE9900"
+      strokeWidth="2.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+  </div>
+);
+
+/* ── Content Data ────────────────────────────────────────────── */
 const services = [
   {
-    icon: "🎓",
+    icon: <LuGraduationCap size={26} />,
     title: "TVET & Technical Training",
     description:
       "Practical training for learners preparing for roles in technology, engineering, and commerce through NBTE-structured NSQ programmes delivered at our Wannune centre.",
@@ -9,7 +214,7 @@ const services = [
     highlight: true,
   },
   {
-    icon: "🏫",
+    icon: <LuSchool size={26} />,
     title: "School Management",
     description:
       "We manage West Africa Redeemer High School and West Africa Nursery and Primary School in Wannune, supporting their day-to-day school operations.",
@@ -17,38 +222,38 @@ const services = [
     websiteLabel: "Visit West Africa school website",
   },
   {
-    icon: "✈️",
+    icon: <LuSend size={26} />,
     title: "Overseas Admissions & Scholarship Support",
     description:
-      "Guidance with overseas study admissions and scholarship applications.",
+      "Guidance with overseas study admissions and scholarship applications for prospective international students.",
   },
   {
-    icon: "🗣️",
+    icon: <LuMic size={26} />,
     title: "IELTS Preparation",
     description:
-      "IELTS preparation services in Abuja at Sky Memorial Complex, Wuse Zone 5.",
+      "IELTS preparation services in Abuja at Sky Memorial Complex, Wuse Zone 5, with certified trainers.",
   },
   {
-    icon: "💻",
+    icon: <LuLaptop size={26} />,
     title: "Digital Learning Platforms",
     description:
       "Design and deliver digital learning platforms for flexible professional development. Our LMS serves learners on mobile and desktop, anywhere in Nigeria.",
   },
   {
-    icon: "📜",
+    icon: <LuAward size={26} />,
     title: "Certification & Skills Assessment",
     description:
       "Certification, licensing support, and skills assessment for vocational learners, aligned with relevant industry standards.",
     highlight: true,
   },
   {
-    icon: "👥",
+    icon: <LuUsers size={26} />,
     title: "Workforce Development",
     description:
       "Workforce development support for organisations seeking skilled technical personnel. We assess, train, and certify teams to fill ICT skills gaps.",
   },
   {
-    icon: "📈",
+    icon: <LuTrendingUp size={26} />,
     title: "Capacity Building",
     description:
       "Capacity development for individuals and teams across technical and business sectors — from school leavers to experienced professionals.",
@@ -57,37 +262,37 @@ const services = [
 
 const whyUs = [
   {
-    icon: "📋",
+    icon: <LuClipboardCheck size={24} />,
     title: "Standards-Based Training",
     description:
       "Our vocational training follows established occupational standards. Accreditation from the National Board for Technical Education (NBTE) is actively in progress.",
   },
   {
-    icon: "📍",
+    icon: <FiMapPin size={24} />,
     title: "Based in Wannune, Tarka",
     description:
       "We are based in your community — Wannune, Tarka Local Government Area, Benue State. No need to travel to Makurdi or Abuja to access quality vocational training.",
   },
   {
-    icon: "📱",
+    icon: <LuSmartphone size={24} />,
     title: "Digital Learning Platform",
     description:
       "Learners access digital learning resources through our online platform, available on any smartphone or computer.",
   },
   {
-    icon: "🕐",
+    icon: <LuClock size={24} />,
     title: "Flexible Class Schedules",
     description:
       "Full-time, part-time, and weekend class schedules to accommodate secondary school leavers, working adults, and students currently in school.",
   },
   {
-    icon: "💰",
+    icon: <LuWallet size={24} />,
     title: "Affordable Fees",
     description:
       "We aim to make vocational education accessible to learners and organisations in our community.",
   },
   {
-    icon: "🤝",
+    icon: <LuTarget size={24} />,
     title: "Employer-Ready Skills",
     description:
       "We teach what employers in Benue State and beyond are actually hiring for — not just theory. Every module ends with a practical deliverable.",
@@ -118,17 +323,25 @@ const history = [
   },
 ];
 
+const aboutPoints = [
+  "NBTE-structured vocational programmes",
+  "Practical, hands-on training at our Wannune centre",
+  "Digital learning platform for flexible study",
+  "School management across our partner schools",
+];
+
 const navItems = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
-  { href: "https://www.guegroup.com", label: "Gue Group", external: true },
+  { href: "#services", label: "Find Sub" },
+  { href: "#about", label: "For School" },
+  { href: "#why", label: "Resource" },
+  { href: "#contact", label: "About Us" },
 ];
 
 const footerLinks = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
+  { href: "#services", label: "Find Sub" },
+  { href: "#about", label: "For School" },
+  { href: "#why", label: "Resource" },
+  { href: "#contact", label: "About Us" },
 ];
 
 const groupLinks = [
@@ -138,355 +351,718 @@ const groupLinks = [
   { href: "https://www.guecyber.ng", label: "Gue Cyber Nigeria" },
 ];
 
+const trustItems = [
+  "CAC Registered · RC 9451933",
+  "Technical & Vocational Education",
+  "Wannune, Benue State",
+  "Subsidiary of Gue Group Limited",
+];
+
 const externalProps = { target: "_blank", rel: "noreferrer" };
+const delay = (i, step = 80) => ({ "--d": `${i * step}ms` });
 
+/* ── Main Landing Component ───────────────────────────────────── */
 const GueEducationalLanding = () => {
-  return (
-    <div className="gue-home gue-edu">
+  const [menuOpen, setMenuOpen] = useState(false);
 
-      {/* ── NAV ── */}
-      <header className="gue-home__nav-shell">
-        <nav className="gue-home__nav">
-          <a href="#top" className="gue-home__logo">
-            <img src="/brand/logo.jpeg" alt="GUE Educational Limited logo" />
-            <span>GUE <em>Educational</em></span>
-          </a>
-          <ul className="gue-home__nav-links" aria-label="Primary navigation">
+  useEffect(() => {
+    const nav = document.querySelector(".edu-nav");
+    const onScroll = () => {
+      nav?.classList.toggle("edu-nav--scrolled", window.scrollY > 20);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const els = document.querySelectorAll(".edu-reveal");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("edu-inview");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div className="edu">
+      {/* ── HEADER / NAVBAR ── */}
+      <header className="edu-nav">
+        <div className="edu-nav__inner">
+          <Link href="/" className="edu-nav__brand">
+            <span className="edu-nav__logo-arc" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 14C4 8.47715 8.47715 4 14 4"
+                  stroke="#2B7A71"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+            <img
+              src="/brand/logo.jpeg"
+              alt="GUE Educational Limited logo"
+              className="edu-nav__logo-img"
+            />
+            <span className="edu-nav__logo-title">
+              <span className="edu-nav__logo-edulearn">EduLearn</span>
+              <span className="edu-nav__logo-sub">GUE Educational</span>
+            </span>
+          </Link>
+
+          <nav className="edu-nav__links" aria-label="Primary navigation">
             {navItems.map((item) => (
-              <li key={item.label}>
-                <a href={item.href} {...(item.external ? externalProps : {})}>{item.label}</a>
-              </li>
+              <a key={item.label} href={item.href}>
+                {item.label}
+              </a>
             ))}
-          </ul>
-          <a href="#contact" className="gue-home__nav-cta">Contact Us</a>
-          <details className="gue-home__mobile-nav">
-            <summary aria-label="Open navigation menu"><span /><span /><span /></summary>
-            <div className="gue-home__mobile-panel">
-              {navItems.map((item) => (
-                <a key={item.label} href={item.href} {...(item.external ? externalProps : {})}>{item.label}</a>
-              ))}
-              <a href="#contact" className="gue-home__mobile-cta">Contact Us</a>
-            </div>
-          </details>
-        </nav>
+          </nav>
+
+          <div className="edu-nav__actions">
+            <a href="#contact" className="edu-btn-appointment">
+              Make Appointment
+            </a>
+            <button
+              type="button"
+              className="edu-nav__burger"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`edu-nav__mobile-panel${
+            menuOpen ? " edu-nav__mobile-panel--open" : ""
+          }`}
+        >
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            className="edu-btn-appointment edu-btn-appointment--mobile"
+            onClick={() => setMenuOpen(false)}
+          >
+            Make Appointment
+          </a>
+        </div>
       </header>
 
       <main id="top">
-
-        {/* ── HERO ── */}
-        <section className="gue-home__hero gue-edu__hero">
-          <div className="gue-home__hero-glow" />
-          <div className="gue-home__hero-grid" />
-          <div className="gue-edu__hero-layout">
-            <div className="gue-home__hero-inner gue-edu__hero-text">
-              <div className="gue-home__eyebrow">
-                Nigeria · GUE Educational Limited · RC 9451933 · NBTE-Structured TVET
-              </div>
-              <h1>
-                Train Here.<br />
-                Earn a <em>Recognised Certificate.</em>
+        {/* ── HERO SECTION (Screenshot 4) ── */}
+        <section className="edu-hero">
+          <div className="edu-hero__inner">
+            {/* Hero Left Content */}
+            <div className="edu-hero__left">
+              <h1 className="edu-hero__heading">
+                Keep Learning
+                <br />
+                <span className="edu-hero__heading-highlight">
+                  on Track
+                  <DoubleUnderline className="edu-hero__underline" />
+                </span>
+                <LoopArrow className="edu-hero__loop-arrow" />
               </h1>
-              <p className="gue-home__hero-copy">
-                GUE Educational Limited supports technical and vocational education from
-                our centre in Wannune, Tarka Local Government Area, Benue State.
-                Practical skills. Local access. Community-focused.
+
+              <p className="edu-hero__subtitle">
+                When schools and districts have reliable access to substitute
+                teachers and subs have the freedom to choose what and when they
+                teach.
               </p>
-              <div className="gue-home__hero-actions">
-                <a href="#contact" className="gue-home__button gue-home__button--primary">
-                  Contact Us
+
+              <div className="edu-hero__cta-row">
+                <a href="#contact" className="edu-hero__btn-get-started">
+                  Get Started
                 </a>
               </div>
-              <div className="gue-home__pills" aria-label="Key facts">
-                <span>NBTE Accreditation In Progress</span>
-                <span>Wannune, Tarka LGA</span>
-                <span>Online LMS</span>
+
+              {/* Connected Feature Cards */}
+              <div className="edu-hero__cards-row">
+                {/* Teacher Card */}
+                <div className="edu-hero__teacher-card">
+                  <div className="edu-hero__teacher-avatar">
+                    <img
+                      src="/edulearn/teacher-woman.png"
+                      alt="Certified teacher with glasses"
+                    />
+                  </div>
+                  <div className="edu-hero__teacher-info">
+                    <p className="edu-hero__teacher-badge">
+                      Best Certified Teacher Worldwide
+                    </p>
+                    <div className="edu-hero__teacher-count">
+                      <span className="edu-hero__teacher-num">210+</span>
+                      <span className="edu-hero__teacher-num-label">
+                        Expert already join us
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Transforming Schools Card */}
+                <div className="edu-hero__transform-card">
+                  <div className="edu-hero__transform-top">
+                    <div className="edu-hero__classroom-thumb">
+                      <img
+                        src="/edulearn/classroom-thumb.png"
+                        alt="Classroom and blackboard"
+                      />
+                    </div>
+                    <ArrowBadge className="edu-hero__transform-arrow" />
+                  </div>
+                  <p className="edu-hero__transform-text">
+                    Transforming schools and substitute teachers
+                  </p>
+                  <DoodleAsterisk
+                    color="#2B7A71"
+                    size={28}
+                    className="edu-hero__transform-star"
+                  />
+                </div>
               </div>
             </div>
-            <div className="gue-edu__hero-image">
-              <img
-                src="/brand/classroom.jpeg"
-                alt="Learners at GUE Educational TVET centre in Wannune"
-                loading="eager"
-              />
-              <div className="gue-edu__hero-image-badge">
-                <span>🎓</span>
-                <div>
-                  <p>TVET Centre</p>
-                  <p>Wannune, Benue State</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* ── TRUST BAR ── */}
-        <section className="gue-home__trust-bar" aria-label="Trust indicators">
-          <p>CAC Registered · RC 9451933</p>
-          <p>Technical & Vocational Education</p>
-          <p>Wannune, Benue State</p>
-          <p>Subsidiary of Gue Group Limited</p>
-        </section>
-
-        {/* ── ABOUT ── */}
-        <section id="about" className="gue-home__section">
-          <p className="gue-home__kicker">Who We Are</p>
-          <h2 className="gue-home__section-title">
-            Vocational & Technical Education for Benue State and Beyond
-          </h2>
-          <div className="gue-home__about-grid">
-            <div className="gue-home__body-copy">
-              <p>
-                <strong>GUE Educational Limited</strong> (RC 9451933) is a privately
-                incorporated Nigerian company registered under the Companies and Allied
-                Matters Act 2020 on 30 March 2026, and a subsidiary of{" "}
-                <strong>Gue Group Limited</strong> (RC 7501599).
-              </p>
-              <p>
-                We deliver technical and vocational education and training (TVET) in
-                Information and Communication Technology from our centre in{" "}
-                <strong>Wannune, Tarka Local Government Area, Benue State</strong>. Our
-                training follows relevant occupational standards, and we are actively
-                pursuing accreditation from the National Board for Technical Education (NBTE).
-              </p>
-              <p>
-                We exist to close the skills gap in Tarka and surrounding communities by
-                delivering practical, locally accessible vocational education.
-              </p>
-              <p>
-                In addition to our TVET centre, we manage West Africa Redeemer High School
-                and West Africa Nursery and Primary School in Wannune. We also support
-                other institutions with education management and digital learning platforms.
-              </p>
-            </div>
-
-            <div className="gue-home__facts-card">
-              <div className="gue-home__fact-row">
-                <span className="gue-home__fact-icon">🏢</span>
-                <div>
-                  <p className="gue-home__fact-label">Registration</p>
-                  <p className="gue-home__fact-value">RC 9451933 · CAMA 2020</p>
-                  <p className="gue-home__fact-sub">Tax ID: 2620760246226</p>
-                </div>
-              </div>
-              <div className="gue-home__fact-row">
-                <span className="gue-home__fact-icon">📅</span>
-                <div>
-                  <p className="gue-home__fact-label">Incorporated</p>
-                  <p className="gue-home__fact-value">30 March 2026</p>
-                  <p className="gue-home__fact-sub">Status: Active</p>
-                </div>
-              </div>
-              <div className="gue-home__fact-row">
-                <span className="gue-home__fact-icon">🔗</span>
-                <div>
-                  <p className="gue-home__fact-label">Group Structure</p>
-                  <p className="gue-home__fact-value">Subsidiary of Gue Group Limited</p>
-                  <p className="gue-home__fact-sub">RC 7501599</p>
-                </div>
-              </div>
-              <div className="gue-home__fact-row">
-                <span className="gue-home__fact-icon">📍</span>
-                <div>
-                  <p className="gue-home__fact-label">Location</p>
-                  <p className="gue-home__fact-value">Wannune, Tarka LGA</p>
-                  <p className="gue-home__fact-sub">Benue State, Nigeria</p>
-                </div>
-              </div>
-              <div className="gue-home__fact-row gue-home__fact-row--last">
-                <span className="gue-home__fact-icon">🎓</span>
-                <div>
-                  <p className="gue-home__fact-label">Accreditation</p>
-                  <p className="gue-home__fact-value">NBTE In Progress</p>
-                  <p className="gue-home__fact-sub">Vocational education</p>
-                </div>
+            {/* Hero Right Visual: Boy holding books with teal backdrop & doodles */}
+            <div className="edu-hero__right">
+              <div className="edu-hero__visual-wrap">
+                <SunburstRays className="edu-hero__sunburst" />
+                <img
+                  src="/edulearn/hero-boy-books.png"
+                  alt="Student smiling holding a tall stack of colorful books"
+                  className="edu-hero__boy-img"
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── SERVICES ── */}
-        <section id="services" className="gue-home__section gue-home__section--alt">
-          <p className="gue-home__kicker">Our Services</p>
-          <h2 className="gue-home__section-title">
-            Practical Services for Learners, Organisations & Communities
-          </h2>
-          <p className="gue-home__section-copy">
-            Beyond our own TVET centre, we support other institutions and organisations
-            across Nigeria with education management, platform development, and workforce
-            training.
-          </p>
-          <div className="gue-home__services-grid">
-            {services.map((service) => (
+        {/* ── SECTION 1: "An Easier Way to be Sub and Find Sub" (Screenshot 1) ── */}
+        <section className="edu-section1" id="services">
+          <div className="edu-section1__inner">
+            {/* Header: Left title with underline and arrow, right description */}
+            <div className="edu-section1__header edu-reveal">
+              <div className="edu-section1__title-col">
+                <h2 className="edu-section1__title">
+                  An Easier Way to be
+                  <br />
+                  <span className="edu-section1__title-highlight">
+                    Sub and Find Sub
+                    <DoubleUnderline className="edu-section1__underline" />
+                  </span>
+                </h2>
+                <LoopArrow className="edu-section1__loop-arrow" />
+              </div>
+
+              <div className="edu-section1__desc-col">
+                <p className="edu-section1__desc">
+                  When schools and districts have reliable access to substitute
+                  teachers and subs have the freedom to choose what and when they
+                  teach, more classes are covered and student learning stays on
+                  track.
+                </p>
+              </div>
+            </div>
+
+            {/* 3 Large White/Pale-Grey Feature Cards */}
+            <div className="edu-section1__cards">
+              {/* Card 1 */}
+              <article className="edu-feature-card edu-reveal" style={delay(0)}>
+                <div className="edu-feature-card__content">
+                  <h3 className="edu-feature-card__title">
+                    Teacher absences <span className="highlight-amber">disrupt</span> student
+                    learning
+                  </h3>
+                  <p className="edu-feature-card__sub">
+                    When schools and districts have reliable access to teacher
+                  </p>
+                </div>
+                <div className="edu-feature-card__bottom">
+                  <div className="edu-feature-card__icon-left">
+                    <SpiralDoodle size={48} />
+                  </div>
+                  <ArrowBadge />
+                </div>
+              </article>
+
+              {/* Card 2 - With Stepped Notch Cutout */}
               <article
-                key={service.title}
-                className={`gue-home__service-card${service.highlight ? " gue-home__service-card--highlight" : ""}`}
+                className="edu-feature-card edu-feature-card--notched edu-reveal"
+                style={delay(1)}
               >
-                <span className="gue-home__service-icon">{service.icon}</span>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                {service.websiteUrl && (
-                  <a
-                    href={service.websiteUrl}
-                    className="gue-home__service-link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {service.websiteLabel}
-                  </a>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* ── WHY US ── */}
-        <section className="gue-home__section">
-          <p className="gue-home__kicker">Why Train With Us</p>
-          <h2 className="gue-home__section-title">
-            Practical. Local. Nationally Recognised.
-          </h2>
-          <div className="gue-home__process-grid" style={{gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))"}}>
-            {whyUs.map((item, i) => (
-              <article key={item.title} className="gue-home__process-step">
-                <p className="gue-home__step-number">{String(i + 1).padStart(2, "0")}</p>
-                <span className="gue-home__process-icon">{item.icon}</span>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* ── HISTORY ── */}
-        <section id="history" className="gue-home__section gue-home__section--alt">
-          <p className="gue-home__kicker">Our History</p>
-          <h2 className="gue-home__section-title">
-            Education as a Pillar of the Gue Group
-          </h2>
-          <p className="gue-home__section-copy">
-            GUE Educational Limited is part of a deliberate group strategy to invest in
-            human capital alongside technology and financial inclusion.
-          </p>
-          <div className="gue-home__timeline">
-            {history.map((item) => (
-              <article key={`${item.year}-${item.company}`} className="gue-home__timeline-item">
-                <div className="gue-home__timeline-year">{item.year}</div>
-                <div className="gue-home__timeline-body">
-                  <span className="gue-home__timeline-dot" />
-                  <h3>{item.company}</h3>
-                  <p className="gue-home__timeline-role">{item.role}</p>
-                  <p>{item.description}</p>
+                <div className="edu-feature-card__top">
+                  <div className="edu-feature-card__icon-globe">
+                    <GlobeDoodle size={48} />
+                  </div>
+                  <ArrowBadge className="edu-feature-card__notch-arrow" />
+                </div>
+                <div className="edu-feature-card__content">
+                  <h3 className="edu-feature-card__title">
+                    A better way to <span className="highlight-amber">connect</span> subs and
+                    schools
+                  </h3>
+                  <p className="edu-feature-card__sub">
+                    When schools and districts have reliable access to teacher
+                  </p>
                 </div>
               </article>
-            ))}
-          </div>
-        </section>
 
-        {/* ── ENROL ── */}
-        <section id="contact" className="gue-home__section gue-edu__enrol-section">
-          <p className="gue-home__kicker gue-home__kicker--center">Contact</p>
-          <h2 className="gue-home__section-title gue-home__section-title--center">
-            Contact GUE Educational Limited
-          </h2>
-          <p className="gue-home__section-copy gue-home__section-copy--center">
-            Contact us by phone, WhatsApp, or email to learn more about our organisation
-            and education services.
-          </p>
-          <div className="gue-moni__contact-grid" style={{maxWidth: "860px", margin: "2.5rem auto 0"}}>
-            <div className="gue-moni__contact-card">
-              <span className="gue-home__service-icon">📞</span>
-              <p className="gue-moni__contact-label">Call / WhatsApp</p>
-              <a href="tel:+2349041157068" className="gue-moni__contact-value">0904 115 7068</a>
-            </div>
-            <div className="gue-moni__contact-card">
-              <span className="gue-home__service-icon">📧</span>
-              <p className="gue-moni__contact-label">Email</p>
-              <a href="mailto:info@guevte.com" className="gue-moni__contact-value">info@guevte.com</a>
-            </div>
-            <div className="gue-moni__contact-card">
-              <span className="gue-home__service-icon">📍</span>
-              <p className="gue-moni__contact-label">Address</p>
-              <p className="gue-moni__contact-value">Wannune, Tarka LGA, Benue State</p>
-            </div>
-            <div className="gue-moni__contact-card">
-              <span className="gue-home__service-icon">🌐</span>
-              <p className="gue-moni__contact-label">Website</p>
-                <a href="https://gue.edu.ng" className="gue-moni__contact-value">gue.edu.ng</a>
+              {/* Card 3 */}
+              <article className="edu-feature-card edu-reveal" style={delay(2)}>
+                <div className="edu-feature-card__content">
+                  <h3 className="edu-feature-card__title">
+                    Student learning <span className="highlight-amber">stays on track</span> to
+                    meet target
+                  </h3>
+                  <p className="edu-feature-card__sub">
+                    When schools and districts have reliable access to teacher
+                  </p>
+                </div>
+                <div className="edu-feature-card__bottom">
+                  <div className="edu-feature-card__icon-left">
+                    <TargetDoodle size={48} />
+                  </div>
+                  <ArrowBadge />
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
-        {/* ── GROUP SECTION ── */}
-        <section className="gue-home__group-section">
-          <div className="gue-home__group-card">
-            <div className="gue-home__group-icon">🏛️</div>
-            <div className="gue-home__group-copy">
-              <p className="gue-home__kicker gue-home__kicker--compact">Part of the Group</p>
-              <h2 className="gue-home__group-title">A Subsidiary of Gue Group Limited</h2>
-              <p>
-                GUE Educational Limited operates under Gue Group Limited (RC 7501599),
-                alongside GUE Engineering (software), Gue Moni (financial inclusion),
-                Gue Cyber (cybersecurity), GUE Smart Farming (agritech), GUE Realty
-                (real estate), GUE Industrial Parks, and GUE Mobility across Nigeria
-                and Belgium.
+        {/* ── SECTION 2: "Why Choose Our Services?" (Screenshot 3) ── */}
+        <section className="edu-section2" id="why">
+          <div className="edu-section2__inner">
+            {/* Header: Title with sparkle and underline, right description */}
+            <div className="edu-section2__header edu-reveal">
+              <div className="edu-section2__title-col">
+                <h2 className="edu-section2__title">
+                  Why Choose Our
+                  <br />
+                  <span className="edu-section2__title-highlight">
+                    Services?
+                    <SparkleStar className="edu-section2__sparkle" size={28} />
+                    <DoubleUnderline className="edu-section2__underline" />
+                  </span>
+                </h2>
+              </div>
+
+              <div className="edu-section2__desc-col">
+                <p className="edu-section2__desc">
+                  Schools and districts save time and money, so they can focus
+                  on full-time staff and student outcomes. Subs work on their
+                  own terms while making a difference in students' lives. The
+                  Swing platform makes it easy for administrators.
+                </p>
+                <LoopArrow className="edu-section2__loop-arrow" />
+              </div>
+            </div>
+
+            {/* Graphic Layout: Girl with books/globe + Staggered Stepped Stat Cards */}
+            <div className="edu-section2__layout edu-reveal">
+              {/* Left Student Image with Teal Backdrop */}
+              <div className="edu-section2__student-col">
+                <div className="edu-section2__student-frame">
+                  <img
+                    src="/edulearn/girl-globe.png"
+                    alt="Young student with glasses holding books and a globe"
+                    className="edu-section2__girl-img"
+                  />
+                </div>
+              </div>
+
+              {/* Right Stepped Stat Cards Row/Staircase */}
+              <div className="edu-section2__stats-col">
+                <SunburstRays className="edu-section2__sunburst" />
+
+                <div className="edu-section2__stats-grid">
+                  {/* Step 1: 3k */}
+                  <div className="edu-stat-box edu-stat-box--1">
+                    <span className="edu-stat-box__num">3k</span>
+                    <span className="edu-stat-box__lbl">Highly Trained Teacher</span>
+                  </div>
+
+                  {/* Step 2: 300+ */}
+                  <div className="edu-stat-box edu-stat-box--2">
+                    <span className="edu-stat-box__num">300+</span>
+                    <span className="edu-stat-box__lbl">Study Center Worldwide</span>
+                  </div>
+
+                  {/* Step 3: 48+ */}
+                  <div className="edu-stat-box edu-stat-box--3">
+                    <span className="edu-stat-box__num">48+</span>
+                    <span className="edu-stat-box__lbl">Country we Served</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── GUE EDUCATIONAL CORE SERVICES ── */}
+        <section className="edu-core-services" id="tvet-services">
+          <div className="edu-core-services__inner">
+            <div className="edu-section-head-center edu-reveal">
+              <span className="edu-badge-pill">Accredited Programmes</span>
+              <h2 className="edu-section-head-title">
+                Vocational &amp; Technical Services
+              </h2>
+              <p className="edu-section-head-copy">
+                Practical, employer-ready training delivered from our centre in
+                Wannune, Tarka LGA, Benue State, plus digital learning platforms
+                serving learners across Nigeria.
               </p>
             </div>
-            <div className="gue-home__group-links">
-              {groupLinks.map((link) => (
-                <a key={link.label} href={link.href} {...externalProps}>{link.label}</a>
+
+            <div className="edu-core-services__grid">
+              {services.map((service, i) => (
+                <article
+                  key={service.title}
+                  className={`edu-service-card edu-reveal${
+                    service.highlight ? " edu-service-card--highlight" : ""
+                  }`}
+                  style={delay(i % 4, 80)}
+                >
+                  <div className="edu-service-card__icon">{service.icon}</div>
+                  <h3 className="edu-service-card__title">{service.title}</h3>
+                  <p className="edu-service-card__desc">{service.description}</p>
+                  {service.websiteUrl && (
+                    <a
+                      href={service.websiteUrl}
+                      className="edu-service-card__link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {service.websiteLabel}
+                      <FiArrowRight size={15} />
+                    </a>
+                  )}
+                </article>
               ))}
             </div>
           </div>
         </section>
 
+        {/* ── ABOUT GUE EDUCATIONAL (Wannune, Benue State) ── */}
+        <section className="edu-about-section" id="about">
+          <div className="edu-about-section__inner">
+            <div className="edu-about-section__media edu-reveal">
+              <div className="edu-about-section__frame">
+                <img
+                  src="/brand/classroom.jpeg"
+                  alt="GUE Educational training centre in Wannune"
+                  loading="lazy"
+                />
+              </div>
+              <div className="edu-about-section__floating-badge">
+                <LuShieldCheck size={26} color="#2B7A71" />
+                <div>
+                  <p className="edu-about-badge-num">RC 9451933</p>
+                  <p className="edu-about-badge-lbl">CAC Registered TVET Provider</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="edu-about-section__content edu-reveal" style={delay(1)}>
+              <span className="edu-badge-pill">Who We Are</span>
+              <h2 className="edu-about-section__title">
+                Technical and Vocational Excellence in Benue State
+              </h2>
+              <div className="edu-about-section__body">
+                <p>
+                  <strong>GUE Educational Limited</strong> (RC 9451933) is a
+                  privately incorporated Nigerian company under CAMA 2020, and an
+                  educational subsidiary of <strong>Gue Group Limited</strong> (RC
+                  7501599).
+                </p>
+                <p>
+                  We deliver technical and vocational education and training
+                  (TVET) in Information and Communication Technology from our
+                  centre in{" "}
+                  <strong>
+                    Wannune, Tarka Local Government Area, Benue State
+                  </strong>
+                  . Accreditation with the National Board for Technical
+                  Education (NBTE) is actively in progress.
+                </p>
+              </div>
+
+              <ul className="edu-about-section__checks">
+                {aboutPoints.map((point) => (
+                  <li key={point}>
+                    <span className="edu-check-circle">
+                      <FiCheck size={14} />
+                    </span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ── WHY TRAIN WITH US (6 Pillars) ── */}
+        <section className="edu-why-section">
+          <div className="edu-why-section__inner">
+            <div className="edu-section-head-center edu-reveal">
+              <span className="edu-badge-pill">Practical &amp; Local</span>
+              <h2 className="edu-section-head-title">Why Train With Us</h2>
+              <p className="edu-section-head-copy">
+                We make high quality vocational and digital education directly
+                accessible to our local community.
+              </p>
+            </div>
+
+            <div className="edu-why-section__grid">
+              {whyUs.map((item, i) => (
+                <div
+                  key={item.title}
+                  className="edu-why-card edu-reveal"
+                  style={delay(i % 3, 90)}
+                >
+                  <div className="edu-why-card__top">
+                    <span className="edu-why-card__number">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="edu-why-card__icon">{item.icon}</span>
+                  </div>
+                  <h3 className="edu-why-card__title">{item.title}</h3>
+                  <p className="edu-why-card__desc">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── HISTORY / TIMELINE ── */}
+        <section className="edu-history-section" id="history">
+          <div className="edu-history-section__inner">
+            <div className="edu-section-head-center edu-reveal">
+              <span className="edu-badge-pill">Milestones</span>
+              <h2 className="edu-section-head-title">
+                Education as a Pillar of the Gue Group
+              </h2>
+            </div>
+
+            <div className="edu-history-timeline">
+              {history.map((item, i) => (
+                <div
+                  key={`${item.year}-${item.company}`}
+                  className="edu-history-node edu-reveal"
+                  style={delay(i, 100)}
+                >
+                  <div className="edu-history-node__year">{item.year}</div>
+                  <div className="edu-history-node__card">
+                    <span className="edu-history-node__dot" />
+                    <h3 className="edu-history-node__title">{item.company}</h3>
+                    <p className="edu-history-node__role">{item.role}</p>
+                    <p className="edu-history-node__text">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT CARDS ── */}
+        <section className="edu-contact-section" id="contact">
+          <div className="edu-contact-section__inner">
+            <div className="edu-section-head-center edu-reveal">
+              <span className="edu-badge-pill">Reach Us</span>
+              <h2 className="edu-section-head-title">Contact GUE Educational Limited</h2>
+              <p className="edu-section-head-copy">
+                Speak directly with our centre coordinators, admissions counsellors,
+                or administration team.
+              </p>
+            </div>
+
+            <div className="edu-contact-section__grid">
+              <div className="edu-contact-card edu-reveal" style={delay(0)}>
+                <div className="edu-contact-card__icon">
+                  <FiPhone size={24} />
+                </div>
+                <p className="edu-contact-card__label">Call / WhatsApp</p>
+                <a href="tel:+2349041157068" className="edu-contact-card__value">
+                  0904 115 7068
+                </a>
+              </div>
+
+              <div className="edu-contact-card edu-reveal" style={delay(1)}>
+                <div className="edu-contact-card__icon">
+                  <FiMail size={24} />
+                </div>
+                <p className="edu-contact-card__label">Email</p>
+                <a href="mailto:info@guevte.com" className="edu-contact-card__value">
+                  info@guevte.com
+                </a>
+              </div>
+
+              <div className="edu-contact-card edu-reveal" style={delay(2)}>
+                <div className="edu-contact-card__icon">
+                  <FiMapPin size={24} />
+                </div>
+                <p className="edu-contact-card__label">TVET Centre Address</p>
+                <p className="edu-contact-card__value">
+                  Wannune, Tarka LGA, Benue State
+                </p>
+              </div>
+
+              <div className="edu-contact-card edu-reveal" style={delay(3)}>
+                <div className="edu-contact-card__icon">
+                  <FiGlobe size={24} />
+                </div>
+                <p className="edu-contact-card__label">Portal</p>
+                <a href="https://gue.edu.ng" className="edu-contact-card__value">
+                  gue.edu.ng
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 3: "Get in Touch" / CTA BANNER (Screenshot 2) ── */}
+        <section className="edu-cta-banner-section">
+          <div className="edu-cta-banner-section__inner">
+            <div className="edu-cta-card">
+              {/* Girl giving thumbs-up */}
+              <div className="edu-cta-card__student-col">
+                <img
+                  src="/edulearn/girl-thumbs.png"
+                  alt="Smiling young student giving a thumbs up"
+                  className="edu-cta-card__girl-img"
+                />
+              </div>
+
+              {/* Teal angled block with content */}
+              <div className="edu-cta-card__content-col">
+                <span className="edu-cta-card__arrow-btn" aria-hidden="true">
+                  <svg
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#FE9900"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </span>
+
+                <p className="edu-cta-card__kicker">Get in Touch</p>
+                <h2 className="edu-cta-card__title">
+                  Join our community of school partners
+                </h2>
+                <p className="edu-cta-card__desc">
+                  Looking to become a substitute teacher? Our Education is now
+                  servicing the greater Chicago area! GUE Educational provides
+                  trusted TVET and school management partnerships nationwide.
+                </p>
+
+                <DoodleAsterisk
+                  color="#FE9900"
+                  size={54}
+                  className="edu-cta-card__star-doodle"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className="gue-home__footer">
-        <div className="gue-home__footer-top">
-          <div>
-            <p className="gue-home__footer-brand">
-              <img src="/brand/logo.jpeg" alt="GUE Educational Limited logo" />
-              <span>GUE <em>Educational</em></span>
-            </p>
-            <p className="gue-home__footer-copy">
-              TVET · Technical Training · Digital Learning · Wannune, Benue State, Nigeria
-            </p>
-          </div>
-          <div>
-            <p className="gue-home__footer-heading">Company</p>
-            <div className="gue-home__footer-links">
-              {footerLinks.map((link) => (
-                <a key={link.label} href={link.href}>{link.label}</a>
+      {/* ── FOOTER (Screenshot 2) ── */}
+      <footer className="edu-footer-redesign">
+        <div className="edu-footer-redesign__inner">
+          <div className="edu-footer-redesign__divider" />
+
+          {/* Row 1: Logo, Horizontal Links, Subscribe Button */}
+          <div className="edu-footer-redesign__row1">
+            <Link href="/" className="edu-footer-redesign__brand">
+              <span className="edu-nav__logo-arc" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M4 14C4 8.47715 8.47715 4 14 4"
+                    stroke="#2B7A71"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              <img
+                src="/brand/logo.jpeg"
+                alt="GUE Educational logo"
+                className="edu-footer-redesign__logo-img"
+              />
+              <span className="edu-footer-redesign__brand-name">
+                <span className="edu-logo-teal">Edu</span>Learn
+              </span>
+            </Link>
+
+            <nav className="edu-footer-redesign__nav">
+              {footerLinks.map((item) => (
+                <a key={item.label} href={item.href}>
+                  {item.label}
+                </a>
               ))}
+            </nav>
+
+            <a href="#contact" className="edu-footer-redesign__subscribe-btn">
+              Subscribe Now
+            </a>
+          </div>
+
+          {/* Row 2: Copyright & Social Media Icons */}
+          <div className="edu-footer-redesign__row2">
+            <p className="edu-footer-redesign__copyright">
+              @ copyright swing.co 2023. All Rights Reserved · GUE Educational
+              Limited (RC 9451933) · Wannune, Benue State
+            </p>
+
+            <div className="edu-footer-redesign__social">
+              <a
+                href="https://www.guegroup.com"
+                {...externalProps}
+                aria-label="Instagram"
+                className="edu-footer-social-btn"
+              >
+                <FaInstagram size={15} />
+              </a>
+              <a
+                href="mailto:info@guevte.com"
+                aria-label="Facebook"
+                className="edu-footer-social-btn"
+              >
+                <FaFacebookF size={15} />
+              </a>
+              <a
+                href="tel:+2349041157068"
+                aria-label="Twitter"
+                className="edu-footer-social-btn"
+              >
+                <FaTwitter size={15} />
+              </a>
             </div>
           </div>
-          <div>
-            <p className="gue-home__footer-heading">Gue Group</p>
-            <div className="gue-home__footer-links">
-              <a href="https://www.guegroup.com" {...externalProps}>Gue Group Limited</a>
-              <a href="https://www.gueengineering.com" {...externalProps}>GUE Engineering</a>
-              <a href="https://www.guemoni.com" {...externalProps}>Gue Moni</a>
-              <a href="https://www.guecyber.ng" {...externalProps}>Gue Cyber Nigeria</a>
-            </div>
-          </div>
-          <div>
-            <p className="gue-home__footer-heading">Contact</p>
-            <div className="gue-home__footer-links">
-              <a href="tel:+2349041157068">0904 115 7068</a>
-              <a href="mailto:info@guevte.com">info@guevte.com</a>
-              <a href="#contact">Contact Us</a>
-            </div>
-          </div>
-        </div>
-        <div className="gue-home__footer-bottom">
-          <p>
-            © 2026 GUE Educational Limited (RC 9451933) · Tax ID: 2620760246226 ·
-            Subsidiary of Gue Group Limited (RC 7501599) · Wannune, Tarka LGA, Benue State, Nigeria
-          </p>
         </div>
       </footer>
-
     </div>
   );
 };
