@@ -1746,16 +1746,20 @@
   will-change: transform;
 }
 
-/* ── Text Reveal (clip wipe, synced with scroll reveal) ───────── */
+/* ── Text Reveal (clip wipe + blur only — opacity/transform owned by .edu-reveal) ── */
 .edu-text-reveal {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: blur(8px);
+  transition:
+    clip-path 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
   transition-delay: var(--d, 0ms);
 }
 
 .edu-inview .edu-text-reveal,
 .edu-text-reveal.edu-inview {
   clip-path: inset(0 0 0 0);
+  filter: blur(0);
 }
 
 /* ── Doodle draw-on animation ─────────────────────────────────── */
@@ -1797,7 +1801,7 @@
 }
 
 .edu-img-zoom:hover {
-  transform: scale(1.045);
+  transform: scale(1.045) rotate(0.5deg);
 }
 
 .edu-img-kenburns {
@@ -2271,6 +2275,162 @@
 
   .edu-cbt-section__content-col {
     padding: 40px 32px;
+  }
+}
+
+/* ── INTERACTIVITY LAYER ─────────────────────────────────────── */
+
+/* Scroll progress bar */
+.edu-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.edu-scroll-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #2b7a71, #fe9900);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* Nav hide on scroll down (sticky nav slides away) */
+.edu-nav--hidden {
+  transform: translateY(-110%);
+}
+
+/* Hero cursor glow + 3D tilt on visual */
+.edu-hero {
+  position: relative;
+}
+
+.edu-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    560px circle at var(--hx, 72%) var(--hy, 28%),
+    rgba(254, 153, 0, 0.09),
+    transparent 70%
+  );
+}
+
+.edu-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.edu-hero__visual-wrap[data-parallax] {
+  transform: translate3d(0, var(--py, 0px), 0) perspective(1100px)
+    rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+/* Card spotlight + magnetic pull (translate property composes with transform) */
+.edu-service-card,
+.edu-why-card,
+.edu-contact-card,
+.edu-feature-card,
+.edu-cbt-partner-card,
+.edu-hero__teacher-card,
+.edu-hero__transform-card,
+.edu-stat-box,
+.edu-history-node__card {
+  position: relative;
+  transition:
+    translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.edu-service-card::before,
+.edu-why-card::before,
+.edu-contact-card::before,
+.edu-feature-card::before,
+.edu-cbt-partner-card::before,
+.edu-hero__teacher-card::before,
+.edu-hero__transform-card::before,
+.edu-stat-box::before,
+.edu-history-node__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(254, 153, 0, 0.12),
+    transparent 70%
+  );
+}
+
+.edu-service-card:hover::before,
+.edu-why-card:hover::before,
+.edu-contact-card:hover::before,
+.edu-feature-card:hover::before,
+.edu-cbt-partner-card:hover::before,
+.edu-hero__teacher-card:hover::before,
+.edu-hero__transform-card:hover::before,
+.edu-stat-box:hover::before,
+.edu-history-node__card:hover::before {
+  opacity: 1;
+}
+
+/* Magnetic buttons */
+.edu-hero__btn-get-started,
+.edu-btn-appointment,
+.edu-footer-redesign__subscribe-btn,
+.edu-cbt-btn {
+  transition:
+    translate 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Doodle hover reactions */
+.edu-hero__heading:hover .edu-hero__loop-arrow,
+.edu-section1__title:hover .edu-section1__loop-arrow,
+.edu-section2__title:hover .edu-section2__loop-arrow {
+  animation: edu-wiggle 0.6s ease;
+}
+
+@keyframes edu-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-9deg);
+  }
+  60% {
+    transform: rotate(7deg);
+  }
+}
+
+.edu-section2__title-highlight:hover .edu-section2__sparkle,
+.edu-cbt-section__title-highlight:hover .edu-cbt-section__sparkle {
+  animation: edu-twinkle 0.7s ease;
+}
+
+@keyframes edu-twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.3) rotate(18deg);
   }
 }
 

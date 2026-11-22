@@ -411,8 +411,180 @@ const GueEducationalLanding = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const cleanups = [];
+
+    // ── Scroll progress bar + nav hide on scroll down ──
+    const progressFill = document.querySelector(".edu-scroll-progress span");
+    const navEl = document.querySelector(".edu-nav");
+    let lastY = window.scrollY;
+    const onScrollUI = () => {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progressFill) {
+        progressFill.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+      }
+      if (y > 200 && y > lastY + 6) navEl?.classList.add("edu-nav--hidden");
+      else if (y < lastY - 6 || y <= 200) navEl?.classList.remove("edu-nav--hidden");
+      lastY = y;
+    };
+    window.addEventListener("scroll", onScrollUI, { passive: true });
+    onScrollUI();
+    cleanups.push(() => window.removeEventListener("scroll", onScrollUI));
+
+    // ── Card cursor spotlight + magnetic pull ──
+    const cards = document.querySelectorAll(
+      ".edu-service-card, .edu-why-card, .edu-contact-card, .edu-feature-card, .edu-cbt-partner-card, .edu-hero__teacher-card, .edu-hero__transform-card, .edu-stat-box, .edu-history-node__card"
+    );
+    const onCardMove = (e) => {
+      const c = e.currentTarget;
+      const r = c.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      c.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+      c.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+      c.style.translate = `${((px - 0.5) * 8).toFixed(1)}px ${((py - 0.5) * 6).toFixed(1)}px`;
+    };
+    const onCardLeave = (e) => {
+      e.currentTarget.style.translate = "0px 0px";
+    };
+    cards.forEach((c) => {
+      c.addEventListener("mousemove", onCardMove, { passive: true });
+      c.addEventListener("mouseleave", onCardLeave);
+    });
+    cleanups.push(() =>
+      cards.forEach((c) => {
+        c.removeEventListener("mousemove", onCardMove);
+        c.removeEventListener("mouseleave", onCardLeave);
+      })
+    );
+
+    // ── Magnetic buttons ──
+    const magBtns = document.querySelectorAll(
+      ".edu-hero__btn-get-started, .edu-btn-appointment, .edu-footer-redesign__subscribe-btn, .edu-cbt-btn"
+    );
+    const onMagMove = (e) => {
+      const b = e.currentTarget;
+      const r = b.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      b.style.translate = `${(dx * 7).toFixed(1)}px ${(dy * 5).toFixed(1)}px`;
+    };
+    const onMagLeave = (e) => {
+      e.currentTarget.style.translate = "0px 0px";
+    };
+    magBtns.forEach((b) => {
+      b.addEventListener("mousemove", onMagMove, { passive: true });
+      b.addEventListener("mouseleave", onMagLeave);
+    });
+    cleanups.push(() =>
+      magBtns.forEach((b) => {
+        b.removeEventListener("mousemove", onMagMove);
+        b.removeEventListener("mouseleave", onMagLeave);
+      })
+    );
+
+    // ── Hero visual 3D tilt + cursor glow (lerped) ──
+    const hero = document.querySelector(".edu-hero");
+    const heroWrap = document.querySelector(".edu-hero__visual-wrap");
+    let heroRaf = null;
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+    const heroLoop = () => {
+      cx += (tx - cx) * 0.09;
+      cy += (ty - cy) * 0.09;
+      if (heroWrap) {
+        heroWrap.style.setProperty("--rx", `${(-cy * 5).toFixed(2)}deg`);
+        heroWrap.style.setProperty("--ry", `${(cx * 6).toFixed(2)}deg`);
+      }
+      if (hero) {
+        hero.style.setProperty("--hx", `${(((cx + 1) / 2) * 100).toFixed(1)}%`);
+        hero.style.setProperty("--hy", `${(((cy + 1) / 2) * 100).toFixed(1)}%`);
+      }
+      if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) {
+        heroRaf = requestAnimationFrame(heroLoop);
+      } else {
+        heroRaf = null;
+      }
+    };
+    const kickHero = () => {
+      if (!heroRaf) heroRaf = requestAnimationFrame(heroLoop);
+    };
+    const onHeroMove = (e) => {
+      if (!hero) return;
+      const r = hero.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      ty = ((e.clientY - r.top) / r.height) * 2 - 1;
+      kickHero();
+    };
+    const onHeroLeave = () => {
+      tx = 0;
+      ty = 0;
+      kickHero();
+    };
+    if (hero) {
+      hero.addEventListener("mousemove", onHeroMove, { passive: true });
+      hero.addEventListener("mouseleave", onHeroLeave);
+    }
+    cleanups.push(() => {
+      if (heroRaf) cancelAnimationFrame(heroRaf);
+      if (hero) {
+        hero.removeEventListener("mousemove", onHeroMove);
+        hero.removeEventListener("mouseleave", onHeroLeave);
+      }
+    });
+
+    // ── Animated stat counters ──
+    const counters = document.querySelectorAll(".edu-stat-box__num");
+    const cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          cio.unobserve(entry.target);
+          const el = entry.target;
+          const raw = el.textContent.trim();
+          const m = raw.match(/^([\d.]+)(.*)$/);
+          if (!m) return;
+          let target = parseFloat(m[1]);
+          const suffix = m[2] || "";
+          const isK = suffix.toLowerCase() === "k";
+          if (isK) target *= 1000;
+          const dur = 1500;
+          const t0 = performance.now();
+          const fmt = (v) => {
+            if (isK) {
+              const k = v / 1000;
+              return `${k % 1 ? k.toFixed(1) : Math.round(k)}k`;
+            }
+            return `${Math.round(v)}${suffix}`;
+          };
+          const tick = (t) => {
+            const p = Math.min(1, (t - t0) / dur);
+            const e = 1 - Math.pow(1 - p, 3);
+            el.textContent = fmt(target * e);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((c) => cio.observe(c));
+    cleanups.push(() => cio.disconnect());
+
+    return () => cleanups.forEach((fn) => fn());
+  }, []);
+
   return (
     <div className="edu">
+      <div className="edu-scroll-progress" aria-hidden="true">
+        <span />
+      </div>
+
       {/* ── HEADER / NAVBAR ── */}
       <header className="edu-nav">
         <div className="edu-nav__inner">
@@ -491,7 +663,7 @@ const GueEducationalLanding = () => {
           <div className="edu-hero__inner">
             {/* Hero Left Content */}
             <div className="edu-hero__left">
-              <h1 className="edu-hero__heading edu-reveal edu-text-reveal" style={delay(1)}>
+              <h1 className="edu-hero__heading edu-reveal" style={delay(1)}>
                 Keep Learning
                 <br />
                 <span className="edu-hero__heading-highlight">
@@ -501,7 +673,7 @@ const GueEducationalLanding = () => {
                 <LoopArrow className="edu-hero__loop-arrow" />
               </h1>
 
-              <p className="edu-hero__subtitle edu-reveal edu-text-reveal" style={delay(2)}>
+              <p className="edu-hero__subtitle edu-reveal" style={delay(2)}>
                 When schools and districts have reliable access to substitute
                 teachers and subs have the freedom to choose what and when they
                 teach.
