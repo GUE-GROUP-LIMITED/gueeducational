@@ -89,6 +89,13 @@ const AboutPage = () => {
                 <p className="gue-page-stat__value">{stat.value}</p>
               </article>
             ))}
+            <div className="gue-page-photo-card" style={{ gridColumn: "1 / -1", marginTop: 8 }}>
+              <img
+                src="/img/img(4).jpg"
+                alt="Students in GUE Educational IT lab"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

@@ -27,8 +27,6 @@ import {
   LuWallet,
   LuTarget,
   LuShieldCheck,
-  LuBuilding,
-  LuBookOpen,
 } from "react-icons/lu";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 
@@ -333,6 +331,7 @@ const aboutPoints = [
 const navItems = [
   { href: "#services", label: "Find Sub" },
   { href: "#about", label: "For School" },
+  { href: "#cbt-center", label: "CBT Center" },
   { href: "#why", label: "Resource" },
   { href: "#contact", label: "About Us" },
 ];
@@ -340,6 +339,7 @@ const navItems = [
 const footerLinks = [
   { href: "#services", label: "Find Sub" },
   { href: "#about", label: "For School" },
+  { href: "#cbt-center", label: "CBT Center" },
   { href: "#why", label: "Resource" },
   { href: "#contact", label: "About Us" },
 ];
@@ -349,13 +349,6 @@ const groupLinks = [
   { href: "https://www.gueengineering.com", label: "GUE Engineering" },
   { href: "https://www.guemoni.com", label: "Gue Moni — Financial Services" },
   { href: "https://www.guecyber.ng", label: "Gue Cyber Nigeria" },
-];
-
-const trustItems = [
-  "CAC Registered · RC 9451933",
-  "Technical & Vocational Education",
-  "Wannune, Benue State",
-  "Subsidiary of Gue Group Limited",
 ];
 
 const externalProps = { target: "_blank", rel: "noreferrer" };
@@ -496,12 +489,12 @@ const GueEducationalLanding = () => {
 
               {/* Connected Feature Cards */}
               <div className="edu-hero__cards-row">
-                {/* Teacher Card */}
+                {/* Teacher Card with img (2) */}
                 <div className="edu-hero__teacher-card">
                   <div className="edu-hero__teacher-avatar">
                     <img
-                      src="/edulearn/teacher-woman.png"
-                      alt="Certified teacher with glasses"
+                      src="/img/img(2).jpg"
+                      alt="Instructor with laptop at GUE Educational"
                     />
                   </div>
                   <div className="edu-hero__teacher-info">
@@ -517,13 +510,13 @@ const GueEducationalLanding = () => {
                   </div>
                 </div>
 
-                {/* Transforming Schools Card */}
+                {/* Transforming Schools Card with img (3) */}
                 <div className="edu-hero__transform-card">
                   <div className="edu-hero__transform-top">
                     <div className="edu-hero__classroom-thumb">
                       <img
-                        src="/edulearn/classroom-thumb.png"
-                        alt="Classroom and blackboard"
+                        src="/img/img(3).jpg"
+                        alt="Hands typing code on laptop keyboard"
                       />
                     </div>
                     <ArrowBadge className="edu-hero__transform-arrow" />
@@ -540,14 +533,15 @@ const GueEducationalLanding = () => {
               </div>
             </div>
 
-            {/* Hero Right Visual: Boy holding books with teal backdrop & doodles */}
+            {/* Hero Right Visual with img (1): Student coding at Apple workstation with teal backdrop */}
             <div className="edu-hero__right">
               <div className="edu-hero__visual-wrap">
+                <div className="edu-hero__visual-backdrop" />
                 <SunburstRays className="edu-hero__sunburst" />
                 <img
-                  src="/edulearn/hero-boy-books.png"
-                  alt="Student smiling holding a tall stack of colorful books"
-                  className="edu-hero__boy-img"
+                  src="/img/img(1).jpg"
+                  alt="Student coding at desktop workstation"
+                  className="edu-hero__main-photo"
                 />
               </div>
             </div>
@@ -646,7 +640,7 @@ const GueEducationalLanding = () => {
           </div>
         </section>
 
-        {/* ── SECTION 2: "Why Choose Our Services?" (Screenshot 3) ── */}
+        {/* ── SECTION 2: "Why Choose Our Services?" with img (4) (Screenshot 3) ── */}
         <section className="edu-section2" id="why">
           <div className="edu-section2__inner">
             {/* Header: Title with sparkle and underline, right description */}
@@ -668,21 +662,22 @@ const GueEducationalLanding = () => {
                   Schools and districts save time and money, so they can focus
                   on full-time staff and student outcomes. Subs work on their
                   own terms while making a difference in students' lives. The
-                  Swing platform makes it easy for administrators.
+                  GUE Educational platform makes it easy for administrators.
                 </p>
                 <LoopArrow className="edu-section2__loop-arrow" />
               </div>
             </div>
 
-            {/* Graphic Layout: Girl with books/globe + Staggered Stepped Stat Cards */}
+            {/* Graphic Layout: Photo of students in IT Lab (img 4) + Staggered Stepped Stat Cards */}
             <div className="edu-section2__layout edu-reveal">
               {/* Left Student Image with Teal Backdrop */}
               <div className="edu-section2__student-col">
                 <div className="edu-section2__student-frame">
+                  <div className="edu-section2__student-backdrop" />
                   <img
-                    src="/edulearn/girl-globe.png"
-                    alt="Young student with glasses holding books and a globe"
-                    className="edu-section2__girl-img"
+                    src="/img/img(4).jpg"
+                    alt="Students engaged at desktop computer lab"
+                    className="edu-section2__main-photo"
                   />
                 </div>
               </div>
@@ -708,6 +703,107 @@ const GueEducationalLanding = () => {
                   <div className="edu-stat-box edu-stat-box--3">
                     <span className="edu-stat-box__num">48+</span>
                     <span className="edu-stat-box__lbl">Country we Served</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CBT CENTER: Bringing Opportunity to the Community ── */}
+        <section className="edu-cbt-section" id="cbt-center">
+          <div className="edu-cbt-section__inner">
+            <div className="edu-cbt-section__layout">
+              {/* Left Column: CBT Infrastructure Visual Media */}
+              <div className="edu-cbt-section__media">
+                <div className="edu-cbt-section__media-wrap">
+                  <div className="edu-cbt-section__backdrop" />
+                  <SunburstRays className="edu-cbt-section__sunburst" />
+                  <img
+                    src="/img/img(4).jpg"
+                    alt="Students in GUE Educational Accredited CBT Center"
+                    className="edu-cbt-section__photo"
+                    loading="lazy"
+                  />
+                  {/* Floating Accreditation Badge */}
+                  <div className="edu-cbt-section__floating-badge">
+                    <div className="edu-cbt-section__badge-icon">
+                      <LuShieldCheck size={28} />
+                    </div>
+                    <div>
+                      <p className="edu-cbt-section__badge-title">JAMB · WAEC · NECO</p>
+                      <p className="edu-cbt-section__badge-sub">Accredited CBT Infrastructure</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Copy & Partnership Callout */}
+              <div className="edu-cbt-section__content">
+                <span className="edu-badge-pill">CBT Center</span>
+                <h2 className="edu-cbt-section__title">
+                  Bringing Opportunity to the{" "}
+                  <span className="edu-cbt-section__title-highlight">
+                    Community
+                    <SparkleStar className="edu-cbt-section__sparkle" size={26} />
+                    <DoubleUnderline className="edu-cbt-section__underline" />
+                  </span>
+                </h2>
+
+                <p className="edu-cbt-section__body-lead">
+                  Many students in Wannune and surrounding communities in Benue State
+                  currently face long journeys to reach accredited CBT centers for
+                  JAMB, WAEC, and NECO examinations. This creates stress, expense,
+                  and risk on exam day.
+                </p>
+
+                <p className="edu-cbt-section__body-desc">
+                  Our center will bring accredited CBT infrastructure directly to the
+                  community — reducing travel time, lowering costs for families,
+                  and giving local students the same reliable access to
+                  examinations as students in larger cities.
+                </p>
+
+                {/* Key Benefits 3-pill grid */}
+                <div className="edu-cbt-section__perks">
+                  <div className="edu-cbt-perk">
+                    <span className="edu-cbt-perk__icon">
+                      <LuClock size={18} />
+                    </span>
+                    <span>Zero Exam Travel Stress</span>
+                  </div>
+                  <div className="edu-cbt-perk">
+                    <span className="edu-cbt-perk__icon">
+                      <LuShieldCheck size={18} />
+                    </span>
+                    <span>Standardized High-Speed Systems</span>
+                  </div>
+                  <div className="edu-cbt-perk">
+                    <span className="edu-cbt-perk__icon">
+                      <LuTarget size={18} />
+                    </span>
+                    <span>Equal Opportunity for Local Students</span>
+                  </div>
+                </div>
+
+                {/* Partnership Card */}
+                <div className="edu-cbt-partner-card">
+                  <div className="edu-cbt-partner-card__header">
+                    <h3 className="edu-cbt-partner-card__title">
+                      Interested in partnering with us?
+                    </h3>
+                    <LoopArrow className="edu-cbt-partner-card__arrow" />
+                  </div>
+                  <p className="edu-cbt-partner-card__desc">
+                    We welcome conversations with community organisations, government
+                    bodies, schools, and private investors who share our commitment
+                    to educational infrastructure in Benue State.
+                  </p>
+                  <div className="edu-cbt-partner-card__action">
+                    <a href="#contact" className="edu-cbt-btn">
+                      <span>Contact Us</span>
+                      <ArrowBadge className="edu-cbt-btn__badge" />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -759,14 +855,14 @@ const GueEducationalLanding = () => {
           </div>
         </section>
 
-        {/* ── ABOUT GUE EDUCATIONAL (Wannune, Benue State) ── */}
+        {/* ── ABOUT GUE EDUCATIONAL (Wannune, Benue State) with img (1) ── */}
         <section className="edu-about-section" id="about">
           <div className="edu-about-section__inner">
             <div className="edu-about-section__media edu-reveal">
               <div className="edu-about-section__frame">
                 <img
-                  src="/brand/classroom.jpeg"
-                  alt="GUE Educational training centre in Wannune"
+                  src="/img/img(1).jpg"
+                  alt="Student at computer in GUE Educational TVET centre in Wannune"
                   loading="lazy"
                 />
               </div>
@@ -908,8 +1004,8 @@ const GueEducationalLanding = () => {
                   <FiMail size={24} />
                 </div>
                 <p className="edu-contact-card__label">Email</p>
-                <a href="mailto:info@guevte.com" className="edu-contact-card__value">
-                  info@guevte.com
+                <a href="mailto:edu@guegroup.com" className="edu-contact-card__value">
+                  edu@guegroup.com
                 </a>
               </div>
 
@@ -936,15 +1032,15 @@ const GueEducationalLanding = () => {
           </div>
         </section>
 
-        {/* ── SECTION 3: "Get in Touch" / CTA BANNER (Screenshot 2) ── */}
+        {/* ── SECTION 3: "Get in Touch" / CTA BANNER with img (2) (Screenshot 2) ── */}
         <section className="edu-cta-banner-section">
           <div className="edu-cta-banner-section__inner">
             <div className="edu-cta-card">
-              {/* Girl giving thumbs-up */}
+              {/* Focused tech learner with laptop: img (2) */}
               <div className="edu-cta-card__student-col">
                 <img
-                  src="/edulearn/girl-thumbs.png"
-                  alt="Smiling young student giving a thumbs up"
+                  src="/img/img(2).jpg"
+                  alt="Student focused on laptop at GUE Educational"
                   className="edu-cta-card__girl-img"
                 />
               </div>
@@ -1032,8 +1128,8 @@ const GueEducationalLanding = () => {
           {/* Row 2: Copyright & Social Media Icons */}
           <div className="edu-footer-redesign__row2">
             <p className="edu-footer-redesign__copyright">
-              @ copyright swing.co 2023. All Rights Reserved · GUE Educational
-              Limited (RC 9451933) · Wannune, Benue State
+              @ copyright 2026. All Rights Reserved · GUE Educational Limited (RC
+              9451933) · Wannune, Benue State
             </p>
 
             <div className="edu-footer-redesign__social">
@@ -1046,7 +1142,7 @@ const GueEducationalLanding = () => {
                 <FaInstagram size={15} />
               </a>
               <a
-                href="mailto:info@guevte.com"
+                href="mailto:edu@guegroup.com"
                 aria-label="Facebook"
                 className="edu-footer-social-btn"
               >

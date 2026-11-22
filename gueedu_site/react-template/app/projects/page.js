@@ -82,6 +82,13 @@ const ProjectsPage = () => {
                 </p>
               </article>
             ))}
+            <div className="gue-page-photo-card" style={{ gridColumn: "1 / -1", marginTop: 8 }}>
+              <img
+                src="/img/img(3).jpg"
+                alt="Engineering delivery in action"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

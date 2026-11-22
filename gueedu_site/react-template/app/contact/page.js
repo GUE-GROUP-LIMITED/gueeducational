@@ -21,13 +21,13 @@ export const metadata = {
 const contactDetails = [
   {
     label: "Email",
-    value: "hello@gueengineering.com",
-    href: "mailto:hello@gueengineering.com",
+    value: "edu@guegroup.com",
+    href: "mailto:edu@guegroup.com",
   },
   {
-    label: "Projects",
-    value: "projects@gueengineering.com",
-    href: "mailto:projects@gueengineering.com",
+    label: "Admissions & Inquiries",
+    value: "edu@guegroup.com",
+    href: "mailto:edu@guegroup.com",
   },
   {
     label: "Phone",
@@ -72,6 +72,13 @@ const ContactPage = () => {
                 </div>
               </article>
             ))}
+            <div className="gue-page-photo-card" style={{ marginTop: 12 }}>
+              <img
+                src="/img/img(2).jpg"
+                alt="Join our community of school partners"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

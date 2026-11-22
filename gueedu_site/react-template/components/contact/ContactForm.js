@@ -129,7 +129,7 @@ const ContactForm = () => {
       <p className="gue-page-form-note">
         Your inquiry is sent securely to our intake queue. For urgent requests, email
         {" "}
-        <a href="mailto:hello@gueengineering.com">hello@gueengineering.com</a>.
+        <a href="mailto:edu@guegroup.com">edu@guegroup.com</a>.
       </p>
     </form>
   );

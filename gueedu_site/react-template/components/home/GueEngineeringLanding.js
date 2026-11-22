@@ -712,7 +712,7 @@ const GueEngineeringLanding = () => {
           <div>
             <p className="gue-home__footer-heading">Contact</p>
             <div className="gue-home__footer-links">
-              <a href="mailto:hello@gueengineering.com">hello@gueengineering.com</a>
+              <a href="mailto:edu@guegroup.com">edu@guegroup.com</a>
               <a href="tel:+2349041157068">+234 904 115 7068</a>
               <Link href="/contact">Start a Project</Link>
             </div>

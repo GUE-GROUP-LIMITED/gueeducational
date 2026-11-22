@@ -115,6 +115,13 @@ const ServicesPage = () => {
                 responsibly, and keep the technical path understandable for your team.
               </p>
             </div>
+            <div className="gue-page-photo-card">
+              <img
+                src="/img/img(1).jpg"
+                alt="Hands-on technical workstations and training"
+                loading="lazy"
+              />
+            </div>
           </div>
           <div className="gue-page-detail-list">
             {process.map((step, index) => (

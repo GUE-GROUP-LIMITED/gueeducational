@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Shadows+Into+Light&display=swap");
 
 *,
 html {
@@ -9,8 +9,30 @@ body {
   margin: 0;
   background-color: #faf8f4;
   color: #222222;
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Shadows Into Light", cursive, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+p,
+span,
+a,
+button,
+input,
+textarea,
+select,
+li,
+label {
+  font-family: "Poppins", sans-serif;
 }
 
 :root {
@@ -58,7 +80,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   color: #222222;
@@ -192,11 +214,11 @@ body {
 .gue-page-hero__title {
   margin: 0;
   color: #222222;
-  font-family: "Syne", sans-serif;
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
-  font-weight: 800;
+  font-family: "Shadows Into Light", cursive, sans-serif;
+  font-size: clamp(2.6rem, 4.4vw, 3.8rem);
+  font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
 }
 
 .gue-page-hero__title span {
@@ -256,12 +278,12 @@ body {
 
 .gue-page-section__title {
   margin: 0 0 12px;
-  font-family: "Syne", sans-serif;
-  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-  font-weight: 800;
-  line-height: 1.15;
+  font-family: "Shadows Into Light", cursive, sans-serif;
+  font-size: clamp(2.2rem, 3.6vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.18;
   color: #222222;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
 }
 
 .gue-page-section__copy {
@@ -294,8 +316,8 @@ body {
 
 .gue-page-card h3 {
   margin: 0 0 10px;
-  font-family: "Syne", sans-serif;
-  font-size: 1.15rem;
+  font-family: "Shadows Into Light", cursive, sans-serif;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #222222;
 }
@@ -351,7 +373,7 @@ body {
 
 .gue-page-stat__value {
   margin: 6px 0 0;
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
   color: #fe9900;
@@ -533,9 +555,9 @@ body {
 }
 
 .gue-page-cta h2 {
-  font-family: "Syne", sans-serif;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 800;
+  font-family: "Shadows Into Light", cursive, sans-serif;
+  font-size: clamp(2rem, 3.4vw, 2.6rem);
+  font-weight: 700;
   margin: 0 0 12px;
 }
 
@@ -565,7 +587,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: "Syne", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
   font-weight: 800;
   color: #222222;
@@ -713,5 +735,35 @@ body {
   .gue-shell-footer__inner {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+}
+
+/* Page Featured Photos & Visuals */
+.gue-page-photo-card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8e4dc;
+  background: #ffffff;
+  margin-top: 20px;
+}
+
+.gue-page-photo-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.gue-page-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .gue-page-photo-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -69,7 +69,7 @@ const Footer = () => {
         <div>
           <p className="gue-shell-footer__heading">Contact</p>
           <div className="gue-shell-footer__links">
-            <a href="mailto:info@guevte.com">info@guevte.com</a>
+            <a href="mailto:edu@guegroup.com">edu@guegroup.com</a>
             <a href="tel:+2349041157068">+234 904 115 7068</a>
             <Link href="/contact">Start a Project</Link>
           </div>

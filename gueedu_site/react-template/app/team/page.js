@@ -33,6 +33,13 @@ const TeamPage = () => {
       <section className="gue-page-section">
         <div className="gue-page-two-col">
           <article className="gue-page-card">
+            <div className="gue-page-photo-card" style={{ marginTop: 0, marginBottom: 20 }}>
+              <img
+                src="/img/img(2).jpg"
+                alt="Gabriel Aloho - Technology Lead"
+                style={{ height: 260 }}
+              />
+            </div>
             <p className="gue-page-section__kicker">Team-Led Delivery</p>
             <h3>Gabriel Aloho</h3>
             <p>
