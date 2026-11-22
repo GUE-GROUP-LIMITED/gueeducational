@@ -1734,3 +1734,571 @@
     gap: 16px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   UNIFIED SPACING SCALE + MOTION SYSTEM
+   8px base · section 80px · layout gap 56px · card pad 32px
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Parallax ────────────────────────────────────────────────── */
+[data-parallax] {
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: transform;
+}
+
+/* ── Text Reveal (clip wipe, synced with scroll reveal) ───────── */
+.edu-text-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+.edu-inview .edu-text-reveal,
+.edu-text-reveal.edu-inview {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── Doodle draw-on animation ─────────────────────────────────── */
+.edu-doodle-underline path,
+.edu-doodle-arrow path {
+  stroke-dasharray: 460;
+  stroke-dashoffset: 460;
+}
+
+.edu-inview .edu-doodle-underline path,
+.edu-text-reveal.edu-inview .edu-doodle-underline path {
+  animation: edu-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.edu-inview .edu-doodle-underline path:nth-child(2),
+.edu-text-reveal.edu-inview .edu-doodle-underline path:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.edu-inview .edu-doodle-arrow path {
+  animation: edu-draw 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+}
+
+@keyframes edu-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── Image animations ─────────────────────────────────────────── */
+.edu-img-zoom {
+  transform: scale(1.07);
+  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-inview .edu-img-zoom,
+.edu-img-zoom.edu-inview {
+  transform: scale(1);
+}
+
+.edu-img-zoom:hover {
+  transform: scale(1.045);
+}
+
+.edu-img-kenburns {
+  animation: edu-kenburns 18s ease-in-out infinite alternate;
+}
+
+@keyframes edu-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+/* ── Floating badges & sunbursts ──────────────────────────────── */
+.edu-float-badge {
+  animation: edu-float 6s ease-in-out infinite;
+}
+
+.edu-hero__sunburst,
+.edu-section2__sunburst,
+.edu-cbt-section__sunburst {
+  animation: edu-float 7s ease-in-out infinite;
+}
+
+@keyframes edu-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ── Button shine sweep ───────────────────────────────────────── */
+.edu-hero__btn-get-started,
+.edu-btn-appointment,
+.edu-footer-redesign__subscribe-btn,
+.edu-cbt-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.edu-hero__btn-get-started::after,
+.edu-btn-appointment::after,
+.edu-footer-redesign__subscribe-btn::after,
+.edu-cbt-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.edu-hero__btn-get-started:hover::after,
+.edu-btn-appointment:hover::after,
+.edu-footer-redesign__subscribe-btn:hover::after,
+.edu-cbt-btn:hover::after {
+  animation: edu-shine 0.7s ease;
+}
+
+@keyframes edu-shine {
+  to {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+/* ── Nav link underline slide ─────────────────────────────────── */
+.edu-nav__links a {
+  position: relative;
+}
+
+.edu-nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: #fe9900;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-nav__links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Hover: service cards ─────────────────────────────────────── */
+.edu-service-card__icon {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease,
+    color 0.3s ease;
+}
+
+.edu-service-card:hover .edu-service-card__icon {
+  transform: rotate(-8deg) scale(1.1);
+  background: #2b7a71;
+  color: #ffffff;
+}
+
+.edu-service-card__link svg {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-service-card__link:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Hover: why cards ─────────────────────────────────────────── */
+.edu-why-card__icon {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease,
+    color 0.3s ease;
+}
+
+.edu-why-card:hover .edu-why-card__icon {
+  transform: rotate(-6deg) scale(1.08);
+  background: #2b7a71;
+  color: #ffffff;
+}
+
+.edu-why-card__number {
+  transition: transform 0.3s ease;
+}
+
+.edu-why-card:hover .edu-why-card__number {
+  transform: scale(1.12);
+}
+
+/* ── Hover: contact cards ─────────────────────────────────────── */
+.edu-contact-card__icon {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease,
+    color 0.3s ease;
+}
+
+.edu-contact-card:hover .edu-contact-card__icon {
+  transform: scale(1.12) rotate(-6deg);
+  background: #fe9900;
+  color: #ffffff;
+}
+
+/* ── Hover: feature cards ─────────────────────────────────────── */
+.edu-feature-card .edu-arrow-badge {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
+}
+
+.edu-feature-card:hover .edu-arrow-badge {
+  transform: translate(3px, -3px);
+  background: #fff3df;
+}
+
+.edu-feature-card__icon-left svg,
+.edu-feature-card__icon-globe svg {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-feature-card:hover .edu-feature-card__icon-left svg,
+.edu-feature-card:hover .edu-feature-card__icon-globe svg {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+/* ── Hover: stat boxes ────────────────────────────────────────── */
+.edu-stat-box__num {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-stat-box:hover .edu-stat-box__num {
+  transform: scale(1.08);
+}
+
+/* ── Hover: history cards ─────────────────────────────────────── */
+.edu-history-node__card {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.edu-history-node__card:hover {
+  transform: translateY(-4px);
+  border-color: #2b7a71;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.07);
+}
+
+.edu-history-node__dot {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edu-history-node__card:hover .edu-history-node__dot {
+  transform: scale(1.4);
+  box-shadow: 0 0 0 6px rgba(254, 153, 0, 0.18);
+}
+
+/* ── Hover: CBT perks & partner card ──────────────────────────── */
+.edu-cbt-perk {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.edu-cbt-perk:hover {
+  transform: translateY(-3px);
+  border-color: #2b7a71;
+  box-shadow: 0 6px 16px rgba(43, 122, 113, 0.12);
+}
+
+.edu-cbt-partner-card {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.edu-cbt-partner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(254, 153, 0, 0.14);
+}
+
+.edu-cbt-partner-card__arrow {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-cbt-partner-card:hover .edu-cbt-partner-card__arrow {
+  transform: translateX(5px);
+}
+
+/* ── Hover: hero mini cards ───────────────────────────────────── */
+.edu-hero__teacher-card,
+.edu-hero__transform-card {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.edu-hero__teacher-card:hover,
+.edu-hero__transform-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.09);
+}
+
+.edu-hero__teacher-avatar img {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-hero__teacher-card:hover .edu-hero__teacher-avatar img {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+/* ── Hover: CTA card ──────────────────────────────────────────── */
+.edu-cta-card__arrow-btn {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
+}
+
+.edu-cta-card:hover .edu-cta-card__arrow-btn {
+  transform: translate(3px, -3px) rotate(8deg);
+  background: #fff3df;
+}
+
+/* ── Hover: footer social ─────────────────────────────────────── */
+.edu-footer-social-btn {
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.edu-footer-social-btn:hover {
+  transform: translateY(-3px) rotate(-8deg);
+}
+
+/* ── Hover: check circles ─────────────────────────────────────── */
+.edu-check-circle {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
+}
+
+.edu-about-section__checks li:hover .edu-check-circle {
+  transform: scale(1.15);
+  background: #2b7a71;
+  color: #ffffff;
+}
+
+/* ── Hover: appointment button lift ───────────────────────────── */
+.edu-btn-appointment,
+.edu-hero__btn-get-started,
+.edu-footer-redesign__subscribe-btn,
+.edu-cbt-btn {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s ease,
+    color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.edu-btn-appointment:hover,
+.edu-footer-redesign__subscribe-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ── UNIFIED SPACING (overrides earlier one-off values) ───────── */
+.edu-hero {
+  padding: 64px 24px 80px;
+}
+
+.edu-section1,
+.edu-section2,
+.edu-core-services,
+.edu-about-section,
+.edu-why-section,
+.edu-history-section,
+.edu-contact-section,
+.edu-cbt-section,
+.edu-cta-banner-section {
+  padding: 80px 24px;
+}
+
+.edu-footer-redesign {
+  padding: 56px 24px 48px;
+}
+
+.edu-hero__inner {
+  gap: 48px;
+}
+
+.edu-section1__header,
+.edu-section2__header {
+  gap: 48px;
+  margin-bottom: 56px;
+}
+
+.edu-section2__layout {
+  gap: 56px;
+}
+
+.edu-about-section__inner {
+  gap: 56px;
+}
+
+.edu-cbt-section__layout {
+  gap: 56px;
+}
+
+.edu-hero__cards-row {
+  gap: 20px;
+}
+
+.edu-section1__cards {
+  gap: 24px;
+}
+
+.edu-core-services__grid,
+.edu-contact-section__grid {
+  gap: 24px;
+}
+
+.edu-section2__stats-grid,
+.edu-history-timeline {
+  gap: 24px;
+}
+
+.edu-service-card {
+  padding: 32px;
+  border-radius: 20px;
+}
+
+.edu-why-card {
+  padding: 32px;
+}
+
+.edu-contact-card {
+  padding: 32px 28px;
+}
+
+.edu-feature-card {
+  padding: 32px;
+  border-radius: 24px;
+}
+
+.edu-history-node__card {
+  padding: 28px 32px;
+  border-radius: 20px;
+}
+
+.edu-cbt-partner-card {
+  padding: 32px;
+  border-radius: 20px;
+}
+
+.edu-hero__teacher-card,
+.edu-hero__transform-card {
+  padding: 20px 22px;
+}
+
+.edu-cbt-section__floating-badge {
+  padding: 16px 24px;
+}
+
+.edu-cbt-section__content-col {
+  padding: 56px 48px;
+}
+
+.edu-badge-pill {
+  margin-bottom: 16px;
+}
+
+.edu-section-head-center {
+  margin-bottom: 56px;
+}
+
+.edu-section-head-title {
+  margin-bottom: 16px;
+}
+
+.edu-about-section__checks {
+  gap: 14px 24px;
+}
+
+/* ── MOTION: responsive overrides (placed last to win) ────────── */
+@media (max-width: 1080px) {
+  .edu-hero {
+    padding: 56px 24px 72px;
+  }
+
+  .edu-section1,
+  .edu-section2,
+  .edu-core-services,
+  .edu-about-section,
+  .edu-why-section,
+  .edu-history-section,
+  .edu-contact-section,
+  .edu-cbt-section,
+  .edu-cta-banner-section {
+    padding: 72px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .edu-hero {
+    padding: 40px 20px 56px;
+  }
+
+  .edu-section1,
+  .edu-section2,
+  .edu-core-services,
+  .edu-about-section,
+  .edu-why-section,
+  .edu-history-section,
+  .edu-contact-section,
+  .edu-cbt-section,
+  .edu-cta-banner-section {
+    padding: 56px 20px;
+  }
+
+  .edu-footer-redesign {
+    padding: 40px 20px 32px;
+  }
+
+  .edu-hero__inner,
+  .edu-section1__header,
+  .edu-section2__header,
+  .edu-section2__layout,
+  .edu-about-section__inner,
+  .edu-cbt-section__layout {
+    gap: 40px;
+  }
+
+  .edu-section1__header,
+  .edu-section2__header,
+  .edu-section-head-center {
+    margin-bottom: 40px;
+  }
+
+  .edu-service-card,
+  .edu-why-card,
+  .edu-contact-card,
+  .edu-feature-card,
+  .edu-cbt-partner-card {
+    padding: 28px 24px;
+  }
+
+  .edu-cbt-section__content-col {
+    padding: 40px 32px;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax] {
+    transform: none !important;
+  }
+
+  .edu-text-reveal {
+    clip-path: none;
+    transition: none;
+  }
+
+  .edu-img-zoom,
+  .edu-img-kenburns,
+  .edu-float-badge,
+  .edu-hero__sunburst,
+  .edu-section2__sunburst,
+  .edu-cbt-section__sunburst {
+    animation: none;
+    transform: none;
+    transition: none;
+  }
+
+  .edu-doodle-underline path,
+  .edu-doodle-arrow path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}

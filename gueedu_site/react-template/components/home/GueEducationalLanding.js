@@ -385,6 +385,32 @@ const GueEducationalLanding = () => {
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    const els = document.querySelectorAll("[data-parallax]");
+    let raf = null;
+    const update = () => {
+      raf = null;
+      const vh = window.innerHeight;
+      els.forEach((el) => {
+        const speed = parseFloat(el.dataset.parallax || "0.15");
+        const rect = el.getBoundingClientRect();
+        const progress = (rect.top + rect.height / 2 - vh / 2) / vh;
+        el.style.setProperty("--py", `${(-progress * speed * 140).toFixed(1)}px`);
+      });
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <div className="edu">
       {/* ── HEADER / NAVBAR ── */}
@@ -465,7 +491,7 @@ const GueEducationalLanding = () => {
           <div className="edu-hero__inner">
             {/* Hero Left Content */}
             <div className="edu-hero__left">
-              <h1 className="edu-hero__heading">
+              <h1 className="edu-hero__heading edu-reveal edu-text-reveal" style={delay(1)}>
                 Keep Learning
                 <br />
                 <span className="edu-hero__heading-highlight">
@@ -475,20 +501,20 @@ const GueEducationalLanding = () => {
                 <LoopArrow className="edu-hero__loop-arrow" />
               </h1>
 
-              <p className="edu-hero__subtitle">
+              <p className="edu-hero__subtitle edu-reveal edu-text-reveal" style={delay(2)}>
                 When schools and districts have reliable access to substitute
                 teachers and subs have the freedom to choose what and when they
                 teach.
               </p>
 
-              <div className="edu-hero__cta-row">
+              <div className="edu-hero__cta-row edu-reveal" style={delay(3)}>
                 <a href="#contact" className="edu-hero__btn-get-started">
                   Get Started
                 </a>
               </div>
 
               {/* Connected Feature Cards */}
-              <div className="edu-hero__cards-row">
+              <div className="edu-hero__cards-row edu-reveal" style={delay(5)}>
                 {/* Teacher Card with img (2) */}
                 <div className="edu-hero__teacher-card">
                   <div className="edu-hero__teacher-avatar">
@@ -534,14 +560,14 @@ const GueEducationalLanding = () => {
             </div>
 
             {/* Hero Right Visual with img (1): Student coding at Apple workstation with teal backdrop */}
-            <div className="edu-hero__right">
-              <div className="edu-hero__visual-wrap">
-                <div className="edu-hero__visual-backdrop" />
+            <div className="edu-hero__right edu-reveal" style={delay(4)}>
+              <div className="edu-hero__visual-wrap" data-parallax="0.1">
+                <div className="edu-hero__visual-backdrop" data-parallax="0.22" />
                 <SunburstRays className="edu-hero__sunburst" />
                 <img
                   src="/img/img(1).jpg"
                   alt="Student coding at desktop workstation"
-                  className="edu-hero__main-photo"
+                  className="edu-hero__main-photo edu-img-kenburns"
                 />
               </div>
             </div>
@@ -554,7 +580,7 @@ const GueEducationalLanding = () => {
             {/* Header: Left title with underline and arrow, right description */}
             <div className="edu-section1__header edu-reveal">
               <div className="edu-section1__title-col">
-                <h2 className="edu-section1__title">
+                <h2 className="edu-section1__title edu-text-reveal">
                   An Easier Way to be
                   <br />
                   <span className="edu-section1__title-highlight">
@@ -566,7 +592,7 @@ const GueEducationalLanding = () => {
               </div>
 
               <div className="edu-section1__desc-col">
-                <p className="edu-section1__desc">
+                <p className="edu-section1__desc edu-text-reveal">
                   When schools and districts have reliable access to substitute
                   teachers and subs have the freedom to choose what and when they
                   teach, more classes are covered and student learning stays on
@@ -580,7 +606,7 @@ const GueEducationalLanding = () => {
               {/* Card 1 */}
               <article className="edu-feature-card edu-reveal" style={delay(0)}>
                 <div className="edu-feature-card__content">
-                  <h3 className="edu-feature-card__title">
+                  <h3 className="edu-feature-card__title edu-text-reveal">
                     Teacher absences <span className="highlight-amber">disrupt</span> student
                     learning
                   </h3>
@@ -608,7 +634,7 @@ const GueEducationalLanding = () => {
                   <ArrowBadge className="edu-feature-card__notch-arrow" />
                 </div>
                 <div className="edu-feature-card__content">
-                  <h3 className="edu-feature-card__title">
+                  <h3 className="edu-feature-card__title edu-text-reveal">
                     A better way to <span className="highlight-amber">connect</span> subs and
                     schools
                   </h3>
@@ -621,7 +647,7 @@ const GueEducationalLanding = () => {
               {/* Card 3 */}
               <article className="edu-feature-card edu-reveal" style={delay(2)}>
                 <div className="edu-feature-card__content">
-                  <h3 className="edu-feature-card__title">
+                  <h3 className="edu-feature-card__title edu-text-reveal">
                     Student learning <span className="highlight-amber">stays on track</span> to
                     meet target
                   </h3>
@@ -646,7 +672,7 @@ const GueEducationalLanding = () => {
             {/* Header: Title with sparkle and underline, right description */}
             <div className="edu-section2__header edu-reveal">
               <div className="edu-section2__title-col">
-                <h2 className="edu-section2__title">
+                <h2 className="edu-section2__title edu-text-reveal">
                   Why Choose Our
                   <br />
                   <span className="edu-section2__title-highlight">
@@ -658,7 +684,7 @@ const GueEducationalLanding = () => {
               </div>
 
               <div className="edu-section2__desc-col">
-                <p className="edu-section2__desc">
+                <p className="edu-section2__desc edu-text-reveal">
                   Schools and districts save time and money, so they can focus
                   on full-time staff and student outcomes. Subs work on their
                   own terms while making a difference in students' lives. The
@@ -672,12 +698,12 @@ const GueEducationalLanding = () => {
             <div className="edu-section2__layout edu-reveal">
               {/* Left Student Image with Teal Backdrop */}
               <div className="edu-section2__student-col">
-                <div className="edu-section2__student-frame">
-                  <div className="edu-section2__student-backdrop" />
+                <div className="edu-section2__student-frame" data-parallax="0.08">
+                  <div className="edu-section2__student-backdrop" data-parallax="0.2" />
                   <img
                     src="/img/img(4).jpg"
                     alt="Students engaged at desktop computer lab"
-                    className="edu-section2__main-photo"
+                    className="edu-section2__main-photo edu-img-zoom"
                   />
                 </div>
               </div>
@@ -688,19 +714,19 @@ const GueEducationalLanding = () => {
 
                 <div className="edu-section2__stats-grid">
                   {/* Step 1: 3k */}
-                  <div className="edu-stat-box edu-stat-box--1">
+                  <div className="edu-stat-box edu-stat-box--1 edu-reveal" style={delay(0)}>
                     <span className="edu-stat-box__num">3k</span>
                     <span className="edu-stat-box__lbl">Highly Trained Teacher</span>
                   </div>
 
                   {/* Step 2: 300+ */}
-                  <div className="edu-stat-box edu-stat-box--2">
+                  <div className="edu-stat-box edu-stat-box--2 edu-reveal" style={delay(1)}>
                     <span className="edu-stat-box__num">300+</span>
                     <span className="edu-stat-box__lbl">Study Center Worldwide</span>
                   </div>
 
                   {/* Step 3: 48+ */}
-                  <div className="edu-stat-box edu-stat-box--3">
+                  <div className="edu-stat-box edu-stat-box--3 edu-reveal" style={delay(2)}>
                     <span className="edu-stat-box__num">48+</span>
                     <span className="edu-stat-box__lbl">Country we Served</span>
                   </div>
@@ -715,18 +741,18 @@ const GueEducationalLanding = () => {
           <div className="edu-cbt-section__inner">
             <div className="edu-cbt-section__layout">
               {/* Left Column: CBT Infrastructure Visual Media */}
-              <div className="edu-cbt-section__media">
-                <div className="edu-cbt-section__media-wrap">
-                  <div className="edu-cbt-section__backdrop" />
+              <div className="edu-cbt-section__media edu-reveal">
+                <div className="edu-cbt-section__media-wrap" data-parallax="0.1">
+                  <div className="edu-cbt-section__backdrop" data-parallax="0.2" />
                   <SunburstRays className="edu-cbt-section__sunburst" />
                   <img
                     src="/img/img(4).jpg"
                     alt="Students in GUE Educational Accredited CBT Center"
-                    className="edu-cbt-section__photo"
+                    className="edu-cbt-section__photo edu-img-zoom"
                     loading="lazy"
                   />
                   {/* Floating Accreditation Badge */}
-                  <div className="edu-cbt-section__floating-badge">
+                  <div className="edu-cbt-section__floating-badge edu-float-badge">
                     <div className="edu-cbt-section__badge-icon">
                       <LuShieldCheck size={28} />
                     </div>
@@ -739,9 +765,9 @@ const GueEducationalLanding = () => {
               </div>
 
               {/* Right Column: Copy & Partnership Callout */}
-              <div className="edu-cbt-section__content">
+              <div className="edu-cbt-section__content edu-reveal" style={delay(1)}>
                 <span className="edu-badge-pill">CBT Center</span>
-                <h2 className="edu-cbt-section__title">
+                <h2 className="edu-cbt-section__title edu-text-reveal">
                   Bringing Opportunity to the{" "}
                   <span className="edu-cbt-section__title-highlight">
                     Community
@@ -750,14 +776,14 @@ const GueEducationalLanding = () => {
                   </span>
                 </h2>
 
-                <p className="edu-cbt-section__body-lead">
+                <p className="edu-cbt-section__body-lead edu-text-reveal">
                   Many students in Wannune and surrounding communities in Benue State
                   currently face long journeys to reach accredited CBT centers for
                   JAMB, WAEC, and NECO examinations. This creates stress, expense,
                   and risk on exam day.
                 </p>
 
-                <p className="edu-cbt-section__body-desc">
+                <p className="edu-cbt-section__body-desc edu-text-reveal">
                   Our center will bring accredited CBT infrastructure directly to the
                   community — reducing travel time, lowering costs for families,
                   and giving local students the same reliable access to
@@ -816,10 +842,10 @@ const GueEducationalLanding = () => {
           <div className="edu-core-services__inner">
             <div className="edu-section-head-center edu-reveal">
               <span className="edu-badge-pill">Accredited Programmes</span>
-              <h2 className="edu-section-head-title">
+              <h2 className="edu-section-head-title edu-text-reveal">
                 Vocational &amp; Technical Services
               </h2>
-              <p className="edu-section-head-copy">
+              <p className="edu-section-head-copy edu-text-reveal">
                 Practical, employer-ready training delivered from our centre in
                 Wannune, Tarka LGA, Benue State, plus digital learning platforms
                 serving learners across Nigeria.
@@ -836,7 +862,7 @@ const GueEducationalLanding = () => {
                   style={delay(i % 4, 80)}
                 >
                   <div className="edu-service-card__icon">{service.icon}</div>
-                  <h3 className="edu-service-card__title">{service.title}</h3>
+                  <h3 className="edu-service-card__title edu-text-reveal">{service.title}</h3>
                   <p className="edu-service-card__desc">{service.description}</p>
                   {service.websiteUrl && (
                     <a
@@ -859,14 +885,15 @@ const GueEducationalLanding = () => {
         <section className="edu-about-section" id="about">
           <div className="edu-about-section__inner">
             <div className="edu-about-section__media edu-reveal">
-              <div className="edu-about-section__frame">
+              <div className="edu-about-section__frame" data-parallax="0.08">
                 <img
                   src="/img/img(1).jpg"
                   alt="Student at computer in GUE Educational TVET centre in Wannune"
+                  className="edu-img-zoom"
                   loading="lazy"
                 />
               </div>
-              <div className="edu-about-section__floating-badge">
+              <div className="edu-about-section__floating-badge edu-float-badge">
                 <LuShieldCheck size={26} color="#2B7A71" />
                 <div>
                   <p className="edu-about-badge-num">RC 9451933</p>
@@ -877,7 +904,7 @@ const GueEducationalLanding = () => {
 
             <div className="edu-about-section__content edu-reveal" style={delay(1)}>
               <span className="edu-badge-pill">Who We Are</span>
-              <h2 className="edu-about-section__title">
+              <h2 className="edu-about-section__title edu-text-reveal">
                 Technical and Vocational Excellence in Benue State
               </h2>
               <div className="edu-about-section__body">
@@ -918,8 +945,8 @@ const GueEducationalLanding = () => {
           <div className="edu-why-section__inner">
             <div className="edu-section-head-center edu-reveal">
               <span className="edu-badge-pill">Practical &amp; Local</span>
-              <h2 className="edu-section-head-title">Why Train With Us</h2>
-              <p className="edu-section-head-copy">
+              <h2 className="edu-section-head-title edu-text-reveal">Why Train With Us</h2>
+              <p className="edu-section-head-copy edu-text-reveal">
                 We make high quality vocational and digital education directly
                 accessible to our local community.
               </p>
@@ -951,7 +978,7 @@ const GueEducationalLanding = () => {
           <div className="edu-history-section__inner">
             <div className="edu-section-head-center edu-reveal">
               <span className="edu-badge-pill">Milestones</span>
-              <h2 className="edu-section-head-title">
+              <h2 className="edu-section-head-title edu-text-reveal">
                 Education as a Pillar of the Gue Group
               </h2>
             </div>
@@ -981,8 +1008,8 @@ const GueEducationalLanding = () => {
           <div className="edu-contact-section__inner">
             <div className="edu-section-head-center edu-reveal">
               <span className="edu-badge-pill">Reach Us</span>
-              <h2 className="edu-section-head-title">Contact GUE Educational Limited</h2>
-              <p className="edu-section-head-copy">
+              <h2 className="edu-section-head-title edu-text-reveal">Contact GUE Educational Limited</h2>
+              <p className="edu-section-head-copy edu-text-reveal">
                 Speak directly with our centre coordinators, admissions counsellors,
                 or administration team.
               </p>
@@ -1035,13 +1062,13 @@ const GueEducationalLanding = () => {
         {/* ── SECTION 3: "Get in Touch" / CTA BANNER with img (2) (Screenshot 2) ── */}
         <section className="edu-cta-banner-section">
           <div className="edu-cta-banner-section__inner">
-            <div className="edu-cta-card">
+            <div className="edu-cta-card edu-reveal">
               {/* Focused tech learner with laptop: img (2) */}
-              <div className="edu-cta-card__student-col">
+              <div className="edu-cta-card__student-col" data-parallax="0.12">
                 <img
                   src="/img/img(2).jpg"
                   alt="Student focused on laptop at GUE Educational"
-                  className="edu-cta-card__girl-img"
+                  className="edu-cta-card__girl-img edu-img-zoom"
                 />
               </div>
 
@@ -1063,11 +1090,11 @@ const GueEducationalLanding = () => {
                   </svg>
                 </span>
 
-                <p className="edu-cta-card__kicker">Get in Touch</p>
-                <h2 className="edu-cta-card__title">
+                <p className="edu-cta-card__kicker edu-text-reveal">Get in Touch</p>
+                <h2 className="edu-cta-card__title edu-text-reveal">
                   Join our community of school partners
                 </h2>
-                <p className="edu-cta-card__desc">
+                <p className="edu-cta-card__desc edu-text-reveal">
                   Looking to become a substitute teacher? Our Education is now
                   servicing the greater Chicago area! GUE Educational provides
                   trusted TVET and school management partnerships nationwide.
@@ -1090,7 +1117,7 @@ const GueEducationalLanding = () => {
           <div className="edu-footer-redesign__divider" />
 
           {/* Row 1: Logo, Horizontal Links, Subscribe Button */}
-          <div className="edu-footer-redesign__row1">
+          <div className="edu-footer-redesign__row1 edu-reveal">
             <Link href="/" className="edu-footer-redesign__brand">
               <span className="edu-nav__logo-arc" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -1126,7 +1153,7 @@ const GueEducationalLanding = () => {
           </div>
 
           {/* Row 2: Copyright & Social Media Icons */}
-          <div className="edu-footer-redesign__row2">
+          <div className="edu-footer-redesign__row2 edu-reveal" style={delay(1)}>
             <p className="edu-footer-redesign__copyright">
               @ copyright 2026. All Rights Reserved · GUE Educational Limited (RC
               9451933) · Wannune, Benue State
